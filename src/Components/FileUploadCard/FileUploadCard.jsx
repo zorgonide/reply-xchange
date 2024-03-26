@@ -11,6 +11,24 @@ function FileUploadCard() {
         if (!selectedFile || !name) {
             return alert('Please fill required fields');
         }
+        const myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Basic ' + btoa('admin:admin'));
+
+        const formdata = new FormData();
+        formdata.append('filePath', selectedFile);
+        formdata.append('fileName', 'test.jpg');
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow',
+        };
+
+        fetch('http://localhost:4502/bin/uploadasset', requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.error(error));
     };
     return (
         <div className='container mx-auto p-4'>
