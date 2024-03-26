@@ -16,7 +16,7 @@ function FileUploadCard() {
 
         const formdata = new FormData();
         formdata.append('filePath', selectedFile);
-        formdata.append('fileName', 'test.jpg');
+        formdata.append('fileName', name);
 
         const requestOptions = {
             method: 'POST',
