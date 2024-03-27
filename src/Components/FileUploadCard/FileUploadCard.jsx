@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
@@ -11,24 +12,30 @@ function FileUploadCard() {
         if (!selectedFile || !name) {
             return alert('Please fill required fields');
         }
-        const myHeaders = new Headers();
-        myHeaders.append('Authorization', 'Basic ' + btoa('admin:admin'));
 
-        const formdata = new FormData();
-        formdata.append('filePath', selectedFile);
-        formdata.append('fileName', name);
+        let data = new FormData();
+        data.append('fileName', name);
+        data.append('filePath', selectedFile);
 
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: formdata,
-            redirect: 'follow',
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            mode: 'no-cors',
+            url: 'http://localhost:4502/bin/uploadasset',
+            headers: {
+                Authorization: 'Basic YWRtaW46YWRtaW4=',
+            },
+            data: data,
         };
 
-        fetch('http://localhost:4502/bin/uploadasset', requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log(result))
-            .catch((error) => console.error(error));
+        axios
+            .request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     return (
         <div className='container mx-auto p-4'>
