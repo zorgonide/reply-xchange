@@ -1,13 +1,16 @@
 import React from 'react';
-import FileUploadCard from './Components/FileUploadCard/FileUploadCard';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './Pages/HomePage'; 
+import GalleryPage from './Pages/GalleryPage'; 
 
 const App = () => {
     return (
-        <div className='flex justify-center items-center h-screen'>
-            <div className='bg-gray-200 p-4'>
-                <FileUploadCard />
-            </div>
-        </div>
+        <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+        </Routes>
+        </Router>
     );
 };
 
