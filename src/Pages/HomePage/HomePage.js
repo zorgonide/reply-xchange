@@ -1,4 +1,4 @@
-import FileUploadCard from '../Components/FileUploadCard/FileUploadCard';
+import FileUploadCard from '../../Components/FileUploadCard/FileUploadCard';
 
 function HomePage() {
     return (
