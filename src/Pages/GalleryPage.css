@@ -1,0 +1,20 @@
+.custom-checkbox {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+.image-container {
+    position: relative;
+    transition: transform 0.2s;
+    cursor: pointer;
+    height: 100%;
+}
+.image-container:hover {
+    transform: scale(1.02);
+}
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}

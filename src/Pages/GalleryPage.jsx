@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import './GalleryPage.css';
+import Footer from '../Components/Footer/Footer';
 function GalleryPage() {
     const [images, setImages] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]);
@@ -12,7 +13,7 @@ function GalleryPage() {
                 return response.data;
             })
             .then((data) => {
-                setImages(data.slice(0, 12));
+                setImages(data.slice(0, 62));
             });
     };
     useEffect(() => {
@@ -30,30 +31,6 @@ function GalleryPage() {
 
     return (
         <div className='container mx-auto p-4'>
-            <style>
-                {`
-                .custom-checkbox {
-                    width: 24px;
-                    height: 24px;
-                    cursor: pointer;
-                }
-                .image-container {
-                    position: relative;
-                    transition: transform 0.2s;
-                    cursor: pointer;
-                    height: 100%;
-                }
-                .image-container:hover {
-                    transform: scale(1.02);
-                }
-                img {
-                    display: block;
-                    max-width: 100%;
-                    height: auto;
-                    border-radius: 8px;
-                }
-                `}
-            </style>
             <div className='grid grid-cols-4 gap-4'>
                 {images.map((image) => (
                     <div key={image.id} className='image-container bg-gray-200 p-1' onClick={() => toggleImageSelection(image)}>
@@ -66,6 +43,7 @@ function GalleryPage() {
                     </div>
                 ))}
             </div>
+            {selectedImages.length > 0 && <Footer />}
         </div>
     );
 }
