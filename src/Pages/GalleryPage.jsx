@@ -41,6 +41,7 @@ function GalleryPage() {
                     position: relative;
                     transition: transform 0.2s;
                     cursor: pointer;
+                    height: 100%;
                 }
                 .image-container:hover {
                     transform: scale(1.02);
