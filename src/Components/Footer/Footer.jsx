@@ -70,6 +70,7 @@ function Footer({ images }) {
                                         type='text'
                                         placeholder='Name'
                                         onChange={(e) => setName(e.target.value)}
+                                        value={name}
                                     />
                                 </div>
                                 <div className='mb-4'>
@@ -82,6 +83,7 @@ function Footer({ images }) {
                                         type='email'
                                         placeholder='example@example.com'
                                         onChange={(e) => setEmail(e.target.value)}
+                                        value={email}
                                     />
                                 </div>
                                 <div className='flex items-center justify-between'>
