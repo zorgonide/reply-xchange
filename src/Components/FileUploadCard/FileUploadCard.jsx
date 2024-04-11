@@ -106,7 +106,7 @@ function FileUploadCard() {
                         </button>
                     </form>
                     {selectedFile && (
-                        <div className='mt-4'>
+                        <div className='mt-4 flex flex-col items-center'>
                             <p>Filename: {selectedFile.name}</p>
                             <p>File type: {selectedFile.type}</p>
                             <p>Size: {(selectedFile.size / 1024 / 1024).toFixed(2)} mb</p>
