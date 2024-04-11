@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 
 function Footer({ images }) {
     const [showModal, setShowModal] = useState(false);
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('ammar.khurshid13@gmail.com');
+    const [name, setName] = useState('Ammar');
     const [isLoading, setIsLoading] = useState(false);
-    const sendEmail = () => {
+
+    const sendEmail = async () => {
         setIsLoading(true);
+        let image = await fetch(images[0].url).then((r) => r.blob());
         const data = {
             service_id: `${process.env.REACT_APP_SERVICE_ID}`,
             template_id: `${process.env.REACT_APP_TEMPLATE_ID}`,
@@ -18,6 +20,7 @@ function Footer({ images }) {
                 message: 'Hi there',
                 to_email: email,
                 reply_to: 'a.khurshid@reply.com',
+                image: image,
             },
         };
 
