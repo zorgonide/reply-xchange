@@ -8,7 +8,7 @@ function RefreshButton({ getImages }) {
             }}
             className='font-bold py-2 px-4 w-12 h-11 rounded border border-black bg-white text-black hover:bg-gray-200 transition-colors duration-150 flex items-center'
         >
-            <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='256' height='256' viewBox='0 0 256 256'>
+            <svg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 256 256'>
                 <defs></defs>
                 <g transform='translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)'>
                     <path
