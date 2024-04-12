@@ -12,7 +12,7 @@ function FileUploadCard() {
             return;
         }
         setSelectedFile(event.target.files[0]);
-        setName(event.target.files[0].name);
+        // setName(event.target.files[0].name);
     };
 
     const checkName = (name) => {
@@ -48,7 +48,7 @@ function FileUploadCard() {
         }
 
         let data = new FormData();
-        data.append('fileName', name);
+        data.append('fileName', name + '.png');
         data.append('filePath', selectedFile);
         data.append('preset', selectedOption);
 

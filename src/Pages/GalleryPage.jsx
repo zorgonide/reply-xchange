@@ -55,8 +55,8 @@ function GalleryPage() {
                             className='border border-gray-300 rounded p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-E11D48'
                         >
                             <option value='all'>All</option>
-                            <option value='ai'>AI</option>
-                            <option value='human'>Human</option>
+                            <option value='1'>AI</option>
+                            <option value='0'>Human</option>
                         </select>
                     </button>
                 </div>
