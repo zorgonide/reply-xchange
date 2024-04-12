@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
+
     const handleFileChange = (event) => {
+        if (event.target.files[0]?.type !== 'image/png') {
+            alert('Please upload a PNG file');
+            return;
+        }
         setSelectedFile(event.target.files[0]);
+        setName(event.target.files[0].name);
     };
 
-    // Function to check name for irregular characters
     const checkName = (name) => {
         const regex = /^[a-zA-Z0-9_]*$/;
         return regex.test(name);
     };
+
     const options = [
         '3d-model',
         'analog-film',
@@ -32,10 +39,12 @@ function FileUploadCard() {
         'pixel-art',
         'tile-texture',
     ];
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!selectedFile || !name || !checkName(name)) {
-            return alert('Please fill required fields');
+            alert('Please fill required fields');
+            return;
         }
 
         let data = new FormData();
@@ -45,76 +54,90 @@ function FileUploadCard() {
 
         let config = {
             method: 'post',
-            maxBodyLength: Infinity,
             url: 'http://localhost:4502/bin/uploadasset',
-            headers: {
-                Authorization: 'Basic YWRtaW46YWRtaW4=',
-            },
+            headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
             data: data,
         };
 
         axios
             .request(config)
-            .then((response) => {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            .then((response) => console.log(JSON.stringify(response.data)))
+            .catch((error) => console.log(error));
     };
+
     return (
-        <div className='flex flex-col justify-center items-center h-screen'>
-            <div className='bg-gray-200 p-4 w-2/6'>
-                <div className='container mx-auto p-4 '>
-                    <form onSubmit={handleSubmit} className='flex flex-col items-center'>
-                        <label className='block mb-2 text-lg font-large'>Upload your photo</label>
-                        <input
-                            className='block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-                            id='file_input'
-                            type='file'
-                            onChange={handleFileChange}
-                        />
-                        <label htmlFor='name' className='block mt-2 text-sm font-medium text-gray-900 dark:text-gray-300'></label>
-                        <input
-                            type='text'
-                            id='name'
-                            name='name'
-                            placeholder='Name'
-                            className='block w-full text-md  bg-gray-50 border border-gray-300  focus:outline-none '
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        <div className='flex flex-wrap justify-center gap-1 my-4'>
-                            {options.map((option) => (
-                                <button
-                                    type='button'
-                                    key={option}
-                                    className={`px-4 py-2 rounded-full text-sm font-medium ${
-                                        selectedOption === option ? 'bg-gray-500 text-white' : 'bg-gray-200 text-gray-800'
-                                    } hover:bg-gray-400 hover:text-white transition-colors`}
-                                    onClick={() => setSelectedOption(option)}
-                                >
-                                    {option.replace('-', ' ')}
-                                </button>
-                            ))}
-                        </div>
-                        <button
-                            type='submit'
-                            className='mt-2 px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+        <div className='flex flex-col justify-center items-center h-screen bg-gray-50'>
+            <div className='bg-white p-6 w-full max-w-md shadow-md rounded-lg'>
+                <form onSubmit={handleSubmit} className='space-y-4'>
+                    <div className='flex items-center justify-center w-ful'>
+                        <label
+                            htmlFor='dropzone-file'
+                            className='flex flex-col items-center justify-center w-full h-34 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-100'
                         >
-                            Upload photo
-                        </button>
-                    </form>
+                            <div className='flex flex-col items-center justify-center pt-5 pb-6'>
+                                <svg className='w-8 h-8 mb-4 text-gray-600' aria-hidden='true' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth={2}
+                                        d='M7 7l5-5m0 0l5 5m-5-5v18M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10M9 21h6'
+                                    />
+                                </svg>
+                                <p className='mb-2 text-sm text-gray-700'>
+                                    <span className='font-semibold'>Click to upload</span> or drag and drop
+                                </p>
+                                <p className='text-xs text-gray-500'>Only PNG files</p>
+                            </div>
+                            <input id='dropzone-file' type='file' className='hidden' onChange={handleFileChange} accept='image/png' />
+                        </label>
+                    </div>
                     {selectedFile && (
-                        <div className='mt-4 flex flex-col items-center'>
+                        <div className='my-4 text-center'>
                             <p>Filename: {selectedFile.name}</p>
-                            <p>File type: {selectedFile.type}</p>
-                            <p>Size: {(selectedFile.size / 1024 / 1024).toFixed(2)} mb</p>
-                            <img src={URL.createObjectURL(selectedFile)} alt='Preview' className='rounded-lg mt-2' style={{ maxWidth: '300px' }} />
+                            {/* <p>File type: {selectedFile.type}</p> */}
+                            <p>Size: {(selectedFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                            <img src={URL.createObjectURL(selectedFile)} alt='Preview' className='mt-4 rounded-lg max-w-full h-auto' />
                         </div>
                     )}
-                </div>
+                    <input
+                        type='text'
+                        name='name'
+                        placeholder='Name'
+                        value={name}
+                        className='block w-full mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <div className='flex flex-wrap gap-2'>
+                        {options.map((option) => (
+                            <label
+                                key={option}
+                                className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${
+                                    selectedOption === option ? 'bg-red-700 text-white' : 'bg-gray-200 text-gray-800'
+                                } hover:bg-red-700 hover:text-white transition-colors`}
+                            >
+                                <input
+                                    type='radio'
+                                    name='preset'
+                                    value={option}
+                                    checked={selectedOption === option}
+                                    onChange={() => setSelectedOption(option)}
+                                    className='sr-only'
+                                />
+                                {option.replace('-', ' ')}
+                            </label>
+                        ))}
+                    </div>
+                    <button
+                        type='submit'
+                        className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
+                        style={{ backgroundColor: selectedFile ? '#E11D48' : '#D1D5DB' }}
+                    >
+                        Upload photo
+                    </button>
+                </form>
             </div>
         </div>
     );
 }
+
 export default FileUploadCard;

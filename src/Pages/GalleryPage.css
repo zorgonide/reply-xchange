@@ -2,6 +2,7 @@
     width: 24px;
     height: 24px;
     cursor: pointer;
+    accent-color: #000;
 }
 .image-container {
     position: relative;
