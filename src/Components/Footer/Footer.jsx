@@ -9,7 +9,15 @@ function Footer({ images }) {
 
     const sendEmail = async () => {
         setIsLoading(true);
-        let image = await fetch(images[0].url).then((r) => r.blob());
+        // let image = await fetch(images[0].url).then((r) => r.blob());
+        let image = await axios
+            .get(images[0].url, {
+                headers: {
+                    Authorization: 'Basic YWRtaW46YWRtaW4=',
+                },
+            })
+            .then((r) => r.blob());
+        // image = image.blob();
         const data = {
             service_id: `${process.env.REACT_APP_SERVICE_ID}`,
             template_id: `${process.env.REACT_APP_TEMPLATE_ID}`,

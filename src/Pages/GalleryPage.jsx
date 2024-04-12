@@ -11,12 +11,16 @@ function GalleryPage() {
     const [previewImage, setPreviewImage] = useState(null);
     const getImages = () => {
         axios
-            .get('https://jsonplaceholder.typicode.com/photos')
+            .get('http://localhost:4502/bin/getassets', {
+                headers: {
+                    Authorization: 'Basic YWRtaW46YWRtaW4=',
+                },
+            })
             .then((response) => {
                 return response.data;
             })
             .then((data) => {
-                setImages(data.slice(0, 62));
+                setImages(data);
             });
     };
     useEffect(() => {

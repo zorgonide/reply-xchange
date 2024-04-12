@@ -46,7 +46,6 @@ function FileUploadCard() {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            mode: 'no-cors',
             url: 'http://localhost:4502/bin/uploadasset',
             headers: {
                 Authorization: 'Basic YWRtaW46YWRtaW4=',
