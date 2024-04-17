@@ -5,19 +5,57 @@ function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
-
+    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const handleFileChange = (event) => {
         if (event.target.files[0]?.type !== 'image/png') {
             alert('Please upload a PNG file');
             return;
         }
         setSelectedFile(event.target.files[0]);
-        // setName(event.target.files[0].name);
     };
 
     const checkName = (name) => {
         const regex = /^[a-zA-Z0-9_]*$/;
         return regex.test(name);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (!selectedFile || !name || !checkName(name)) {
+            alert('Please fill required fields');
+            return;
+        }
+
+        let data = new FormData();
+        data.append('fileName', name + '.png');
+        data.append('filePath', selectedFile);
+        data.append('preset', selectedOption);
+
+        let config = {
+            method: 'post',
+            url: 'http://localhost:4502/bin/uploadasset',
+            headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
+            data: data,
+        };
+
+        setIsUploading(true);
+        axios
+            .request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                setUploadSuccess(true);
+                setSelectedFile(null);
+                setName('');
+                setSelectedOption('');
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('Upload failed, please try again.');
+            })
+            .finally(() => {
+                setIsUploading(false);
+            });
     };
 
     const options = [
@@ -39,31 +77,6 @@ function FileUploadCard() {
         'pixel-art',
         'tile-texture',
     ];
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!selectedFile || !name || !checkName(name)) {
-            alert('Please fill required fields');
-            return;
-        }
-
-        let data = new FormData();
-        data.append('fileName', name + '.png');
-        data.append('filePath', selectedFile);
-        data.append('preset', selectedOption);
-
-        let config = {
-            method: 'post',
-            url: 'http://localhost:4502/bin/uploadasset',
-            headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
-            data: data,
-        };
-
-        axios
-            .request(config)
-            .then((response) => console.log(JSON.stringify(response.data)))
-            .catch((error) => console.log(error));
-    };
 
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-gray-50'>
@@ -134,6 +147,7 @@ function FileUploadCard() {
                     >
                         Upload photo
                     </button>
+                    {uploadSuccess && <p className='text-green-500'>File uploaded successfully!</p>}
                 </form>
             </div>
         </div>
