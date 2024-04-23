@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import Drawing from '../../assets/drawing.svg';
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
@@ -82,7 +82,7 @@ function FileUploadCard() {
                     <div className='flex items-center justify-center w-ful'>
                         <label
                             htmlFor='dropzone-file'
-                            className='flex flex-col items-center justify-center w-full h-34 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-100'
+                            className='flex flex-col items-center justify-center w-full h-34 border-2 border-cred border-dashed rounded-lg cursor-pointer hover:bg-gray-100'
                         >
                             <div className='flex flex-col items-center justify-center pt-5 pb-6'>
                                 {!selectedFile && (
@@ -109,7 +109,7 @@ function FileUploadCard() {
                                 )}
                                 {selectedFile && (
                                     <div className='px-4'>
-                                        <img src={URL.createObjectURL(selectedFile)} alt='Preview' className='mt-4 rounded-lg max-w-full h-auto' />
+                                        <img src={Drawing} alt='Preview' className='mt-4 rounded-lg max-w-full h-auto' />
                                     </div>
                                 )}
                             </div>
@@ -121,10 +121,10 @@ function FileUploadCard() {
                         name='name'
                         placeholder='Name'
                         value={name}
-                        className='block w-full mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                        className='block w-full mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-cred'
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <div className='flex flex-wrap gap-2'>
+                    {/* <div className='flex flex-wrap gap-2'>
                         {options.map((option) => (
                             <label
                                 key={option}
@@ -143,15 +143,17 @@ function FileUploadCard() {
                                 {option.replace('-', ' ')}
                             </label>
                         ))}
-                    </div>
+                    </div> */}
                     <button
                         type='submit'
-                        className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
-                        style={{ backgroundColor: selectedFile && name ? '#E11D48' : '#D1D5DB' }}
+                        className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none  ${
+                            selectedFile && name ? 'bg-cred hover:bg-red-700 focus:ring-2 focus:ring-offset-2 focus:ring-red-500' : 'bg-gray-400'
+                        }`}
+                        disabled={!selectedFile || !name}
                     >
                         Upload photo
                     </button>
-                    {uploadSuccess && <p className='text-green-500'>File uploaded successfully!</p>}
+                    {uploadSuccess && <p className='text-center text-green-500'>File uploaded successfully!</p>}
                 </form>
             </div>
         </div>
