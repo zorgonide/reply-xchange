@@ -29,15 +29,18 @@ function FileUploadCard() {
         }
 
         let data = new FormData();
-        data.append('fileName', name + '.png');
-        data.append('filePath', selectedFile);
-        data.append('preset', selectedOption);
+        data.append('username', name);
+        data.append('file', selectedFile);
+        // data.append('preset', selectedOption);
 
+        let usernameData = {
+            username: name,
+        };
         let config = {
             method: 'post',
-            url: 'http://localhost:4502/bin/uploadasset',
+            url: 'http://localhost:4502/bin/checkUsername',
             headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
-            data: data,
+            data: usernameData,
         };
 
         axios
@@ -48,6 +51,20 @@ function FileUploadCard() {
                 setSelectedFile(null);
                 setName('');
                 setSelectedOption('');
+            })
+            .then(() => {
+                axios
+                    .post('http://localhost:4502/bin/uploadAsset', data, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            Authorization: 'Basic YWRtaW46YWRtaW4=',
+                        },
+                        data: data,
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        alert('Upload successful');
+                    });
             })
             .catch((error) => {
                 console.log(error);
@@ -153,7 +170,7 @@ function FileUploadCard() {
                     >
                         Upload photo
                     </button>
-                    {uploadSuccess && <p className='text-center text-green-500'>File uploaded successfully!</p>}
+                    {uploadSuccess && <p className='text-center text-green-500'>username checked successfully!</p>}
                 </form>
             </div>
         </div>
