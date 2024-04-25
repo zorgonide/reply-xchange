@@ -72,26 +72,6 @@ function FileUploadCard() {
             });
     };
 
-    const options = [
-        '3d-model',
-        'analog-film',
-        'anime',
-        'cinematic',
-        'comic-book',
-        'digital-art',
-        'enhance',
-        'fantasy-art',
-        'isometric',
-        'line-art',
-        'low-poly',
-        'modeling-compound',
-        'neon-punk',
-        'origami',
-        'photographic',
-        'pixel-art',
-        'tile-texture',
-    ];
-
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-gray-50'>
             <div className='bg-white p-6 w-full max-w-md shadow-md rounded-lg'>
@@ -141,26 +121,6 @@ function FileUploadCard() {
                         className='block w-full mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-cred'
                         onChange={(e) => setName(e.target.value)}
                     />
-                    {/* <div className='flex flex-wrap gap-2'>
-                        {options.map((option) => (
-                            <label
-                                key={option}
-                                className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${
-                                    selectedOption === option ? 'bg-red-700 text-white' : 'bg-gray-200 text-gray-800'
-                                } hover:bg-red-700 hover:text-white transition-colors`}
-                            >
-                                <input
-                                    type='radio'
-                                    name='preset'
-                                    value={option}
-                                    checked={selectedOption === option}
-                                    onChange={() => setSelectedOption(option)}
-                                    className='sr-only'
-                                />
-                                {option.replace('-', ' ')}
-                            </label>
-                        ))}
-                    </div> */}
                     <button
                         type='submit'
                         className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none  ${
