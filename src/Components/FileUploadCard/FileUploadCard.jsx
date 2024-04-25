@@ -29,24 +29,21 @@ function FileUploadCard() {
         }
 
         let data = new FormData();
-        data.append('username', name);
+        data.append('username', name.replace(/\s+/g, ''));
         data.append('file', selectedFile);
         // data.append('preset', selectedOption);
 
-        let usernameData = {
-            username: name,
-        };
         let config = {
             method: 'post',
-            url: 'http://localhost:4502/bin/checkUsername',
+            url: 'http://localhost:4502/bin/checkusername?username=' + name.replace(/\s+/g, ''),
             headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
-            data: usernameData,
         };
 
         axios
             .request(config)
+            .then((response) => response.data)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                console.log(JSON.stringify(response));
                 setUploadSuccess(true);
                 setSelectedFile(null);
                 setName('');
