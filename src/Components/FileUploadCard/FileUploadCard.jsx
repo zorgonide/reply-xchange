@@ -4,13 +4,8 @@ import Drawing from '../../assets/drawing.svg';
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
-    const [selectedOption, setSelectedOption] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const handleFileChange = (event) => {
-        if (event.target.files[0]?.type !== 'image/png') {
-            alert('Please upload a PNG file');
-            return;
-        }
         setSelectedFile(event.target.files[0]);
     };
 
@@ -33,21 +28,14 @@ function FileUploadCard() {
         data.append('file', selectedFile);
         // data.append('preset', selectedOption);
 
-        let config = {
-            method: 'post',
-            url: 'http://localhost:4502/bin/checkUsername?username=' + name.replace(/\s+/g, ''),
-            headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
-        };
-
         axios
-            .request(config)
+            .post('http://localhost:4502/bin/checkUsername?username=' + name.replace(/\s+/g, ''), null, {
+                headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
+            })
             .then((response) => response.data)
             .then((response) => {
+                setUploadSuccess('Username checked... uploading file...');
                 console.log(JSON.stringify(response));
-                setUploadSuccess(true);
-                setSelectedFile(null);
-                setName('');
-                setSelectedOption('');
             })
             .then(() => {
                 axios
@@ -56,11 +44,13 @@ function FileUploadCard() {
                             'Content-Type': 'multipart/form-data',
                             Authorization: 'Basic YWRtaW46YWRtaW4=',
                         },
-                        data: data,
                     })
                     .then((response) => {
-                        console.log(response);
+                        console.log(response, 'upload successful');
                         alert('Upload successful');
+                        setUploadSuccess('Upload successful!');
+                        setSelectedFile(null);
+                        setName('');
                     });
             })
             .catch((error) => {
@@ -127,7 +117,7 @@ function FileUploadCard() {
                     >
                         Upload photo
                     </button>
-                    {uploadSuccess && <p className='text-center text-green-500'>username checked successfully!</p>}
+                    {uploadSuccess && <p className='text-center text-green-500'>{uploadSuccess}</p>}
                 </form>
             </div>
         </div>
