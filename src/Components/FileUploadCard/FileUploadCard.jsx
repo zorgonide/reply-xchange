@@ -35,7 +35,7 @@ function FileUploadCard() {
 
         let config = {
             method: 'post',
-            url: 'http://localhost:4502/bin/checkusername?username=' + name.replace(/\s+/g, ''),
+            url: 'http://localhost:4502/bin/checkUsername?username=' + name.replace(/\s+/g, ''),
             headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
         };
 
