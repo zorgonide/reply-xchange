@@ -4,6 +4,7 @@ import './GalleryPage.css';
 import Footer from '../Components/Footer/Footer';
 import Preview from '../Components/Preview/Preview';
 import RefreshButton from '../Components/RefreshButton/RefreshButton';
+import Image from '../Components/Image/Image';
 function GalleryPage() {
     const [images, setImages] = useState([]);
     const [originalImages, setOriginalImages] = useState([]);
@@ -86,16 +87,13 @@ function GalleryPage() {
             </div>
             <div className='grid grid-cols-4 gap-4'>
                 {images.map((image) => (
-                    <div key={image.id} className='image-container bg-gray-200 p-1' onClick={() => toggleImageSelection(image)}>
-                        <input
-                            type='checkbox'
-                            className='custom-checkbox absolute top-0 right-0 m-2'
-                            checked={selectedImages.some((e) => e.id === image.id)}
-                            readOnly
-                            style={{ display: selectImages ? 'block' : 'none' }}
-                        />
-                        <img src={image.url} alt={image.title} />
-                    </div>
+                    <Image
+                        key={image.id}
+                        image={image}
+                        toggleImageSelection={toggleImageSelection}
+                        selectedImages={selectedImages}
+                        selectImages={selectImages}
+                    />
                 ))}
             </div>
             {selectedImages.length > 0 && <Footer images={selectedImages} />}
