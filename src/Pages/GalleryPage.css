@@ -6,12 +6,15 @@
 }
 .image-container {
     position: relative;
-    transition: transform 0.2s;
     cursor: pointer;
     aspect-ratio: 1/1;
 }
 .image-container:hover {
-    transform: scale(1.02);
+    img {
+        transition: transform 0.2s;
+        transform: scale(1.02);
+        border-radius:unset;
+    }
 }
 img {
     display: block;
