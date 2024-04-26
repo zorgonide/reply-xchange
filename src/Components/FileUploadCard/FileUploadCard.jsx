@@ -47,7 +47,6 @@ function FileUploadCard() {
                     })
                     .then((response) => {
                         console.log(response, 'upload successful');
-                        alert('Upload successful');
                         setUploadSuccess('Upload successful!');
                         setSelectedFile(null);
                         setName('');

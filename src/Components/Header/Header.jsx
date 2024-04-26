@@ -14,7 +14,7 @@ function Header() {
                     </li>
                 </ul>
                 <div className=''>
-                    <img src={logo} alt='logo' className='h-12 md:h-16' />
+                    <img src={logo} alt='logo' className='h-16 w-auto' />
                 </div>
             </nav>
         </header>
