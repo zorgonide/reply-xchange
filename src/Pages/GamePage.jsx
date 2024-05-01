@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Footer from '../Components/Footer/Footer';
-import Preview from '../Components/Preview/Preview';
-import RefreshButton from '../Components/RefreshButton/RefreshButton';
 import Image from '../Components/Image/Image';
 import { useParams } from 'react-router-dom';
+import useWindowSize from 'react-use/lib/useWindowSize';
+import Confetti from 'react-confetti';
 function GamePage() {
     const [images, setImages] = useState([]);
-    const [originalImages, setOriginalImages] = useState([]);
-    const [selectedImages, setSelectedImages] = useState([]);
-    const [selectImages, setSelectImages] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [previewImage, setPreviewImage] = useState(null);
-    const [dropdownOption, setDropdownOption] = React.useState('all');
+    const [status, setStatus] = useState(false);
+    const [selectedImages, setSelectedImage] = useState([]);
     const { id } = useParams();
+    const { width, height } = useWindowSize();
     function randomSort(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -29,81 +25,60 @@ function GamePage() {
             })
             .then((response) => response.data)
             .then((data) => {
-                let shuffledData = data;
-                setImages(shuffledData);
-                setOriginalImages(shuffledData);
+                randomSort(data);
+                setImages(data);
             });
     };
     useEffect(() => {
         getImages();
     }, []);
     const toggleImageSelection = (image) => {
-        if (selectImages) {
-            setSelectedImages((prevSelectedImages) => {
-                if (prevSelectedImages.some((e) => e.id === image.id)) {
-                    return prevSelectedImages.filter((e) => e.id !== image.id);
-                } else {
-                    return [...prevSelectedImages, image];
-                }
-            });
-        } else {
-            setPreviewImage(image);
-            setShowModal(true);
-        }
+        setSelectedImage(image);
     };
-    const changeFilter = (filter) => {
-        setDropdownOption(filter);
-        if (filter === 'all') {
-            setImages(originalImages);
+    const checkSelection = () => {
+        if (!selectedImages.source) {
+            setStatus(true);
         } else {
-            setImages(originalImages.filter((image) => image.source == filter));
+            alert('you got that wrong!');
         }
     };
     return (
         <div className='container mx-auto p-4'>
-            {/* <div className='flex justify-between items-center pb-4 pt-3'>
-                <div className='relative'>
-                    <button className='text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center'>
-                        <span className='mr-1'>Filter</span>
-                        <select
-                            value={dropdownOption}
-                            onChange={(e) => changeFilter(e.target.value)}
-                            className='border border-gray-300 rounded p-2 shadow-sm focus:outline-none focus:ring-2'
-                        >
-                            <option value='all'>All</option>
-                            <option value='1'>AI</option>
-                            <option value='0'>Human</option>
-                        </select>
-                    </button>
-                </div>
-                <div className='flex space-x-4'>
-                    <button
-                        onClick={() => {
-                            setSelectImages(!selectImages);
-                            setSelectedImages([]);
-                        }}
-                        className={`font-bold py-2 px-4 rounded border border-black transition-colors duration-150 ${
-                            selectImages ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'
-                        }`}
-                    >
-                        Select Images
-                    </button>
-                    <RefreshButton getImages={getImages} />
-                </div>
-            </div> */}
-            <div className='grid grid-cols-3 gap-4 h-screen'>
+            <div className='grid grid-cols-3'>
                 {images.map((image) => (
                     <Image
                         key={image.id}
                         image={image}
                         toggleImageSelection={toggleImageSelection}
                         selectedImages={selectedImages}
-                        selectImages={selectImages}
+                        selectImages={true}
                     />
                 ))}
             </div>
-            {selectedImages.length > 0 && <Footer images={selectedImages} />}
-            {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} />}
+            {selectedImages.id && (
+                <div className='bg-gray-400 text-white fixed p-4 bottom-0 left-0 right-0 z-50'>
+                    <div className='flex justify-end'>
+                        <button
+                            onClick={() => checkSelection()}
+                            className='px-4 py-2 border border-transparent shadow-md text-md font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 '
+                        >
+                            Select
+                        </button>
+                    </div>
+                </div>
+            )}
+            {/* {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} />} */}
+            <Confetti
+                width={width}
+                height={height}
+                recycle={false}
+                initialVelocityY={5}
+                run={status}
+                numberOfPieces={400}
+                onConfettiComplete={() => {
+                    alert('You got it right!');
+                }}
+            />
         </div>
     );
 }
