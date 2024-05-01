@@ -3,28 +3,33 @@ import axios from 'axios';
 import Cat from '../assets/cat-magic.gif';
 import { useNavigate } from 'react-router-dom';
 function GameSessionsPage() {
-    let array = new Array(100).fill().map((_, i) => 'User' + (i + 1));
     const [usernames, setUsernames] = useState([]);
     let navigate = useNavigate();
     const routeChange = (username) => {
         let path = `/game/${username}`;
         navigate(path);
     };
+    const fetchUsernames = async () => {
+        try {
+            const response = await axios.get('http://localhost:4502/bin/getGame', {
+                headers: {
+                    Authorization: 'Basic YWRtaW46YWRtaW4=',
+                },
+            });
+            let data = await response.data;
+            if (Array.isArray(data)) {
+                setUsernames(data);
+            } else throw new Error('Invalid response from server');
+        } catch (error) {
+            console.error('Failed to fetch usernames:', error);
+        }
+    };
     useEffect(() => {
-        const fetchUsernames = async () => {
-            try {
-                const response = await axios.get('http://localhost:4502/bin/getgame');
-                if (Array.isArray(response.data)) {
-                    setUsernames(response.data);
-                }
-                throw new Error('Invalid response from server');
-            } catch (error) {
-                console.error('Failed to fetch usernames:', error);
-                setUsernames(array);
-            }
-        };
-
         fetchUsernames();
+        const intervalId = setInterval(fetchUsernames, 3000); // Fetch usernames every 5 seconds
+
+        // Clean up the interval on component unmount
+        return () => clearInterval(intervalId);
     }, []);
 
     return (
@@ -43,10 +48,10 @@ function GameSessionsPage() {
                             {usernames.map((username) => (
                                 <div
                                     key={username}
-                                    className='cursor-pointer bg-white font-semibold p-2 border rounded shadow-lg text-cred text-center hover:bg-gray-50'
+                                    className='cursor-pointer bg-white font-semibold p-2 border border-cred rounded shadow-sm text-cred text-center hover:bg-gray-50'
                                     onClick={() => routeChange(username)}
                                 >
-                                    {username}
+                                    {username.replace(/[^a-zA-Z]/g, '')}
                                 </div>
                             ))}
                         </div>

@@ -14,7 +14,7 @@ function HomePage() {
                 <Route path='/' element={<FileUploadCard />} />
                 <Route path='/gallery' element={<GalleryPage />} />
                 <Route path='/game' element={<GameSessionsPage />} />
-                <Route path='/game/:username' component={GamePage} />
+                <Route path='/game/:id' element={<GamePage />} />
             </Routes>
         </>
     );
