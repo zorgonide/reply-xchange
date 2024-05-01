@@ -64,7 +64,7 @@ function Footer({ images }) {
                         <h3 className='text-lg font-medium leading-6 text-gray-900'>Send Email</h3>
                         {isLoading ? ( // Check if loading
                             <div className='flex justify-center items-center'>
-                                <div className='loader'>Sending...</div> {/* Placeholder for your loader */}
+                                <div className='loader'>Sending...</div>
                             </div>
                         ) : (
                             <form className='bg-white rounded px-8 pt-6 pb-8 mb-4'>
