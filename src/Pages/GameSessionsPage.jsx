@@ -3,9 +3,13 @@ import axios from 'axios';
 import Cat from '../assets/cat-magic.gif';
 import { useNavigate } from 'react-router-dom';
 function GameSessionsPage() {
-    let array = new Array(100).fill().map((_, i) => 'User ' + (i + 1));
+    let array = new Array(100).fill().map((_, i) => 'User' + (i + 1));
     const [usernames, setUsernames] = useState([]);
-    const history = useNavigate();
+    let navigate = useNavigate();
+    const routeChange = (username) => {
+        let path = `/game/${username}`;
+        navigate(path);
+    };
     useEffect(() => {
         const fetchUsernames = async () => {
             try {
@@ -22,10 +26,6 @@ function GameSessionsPage() {
 
         fetchUsernames();
     }, []);
-
-    const handleUserClick = (username) => {
-        history.push(`/game/${username}`);
-    };
 
     return (
         <div className='flex flex-col min-h-screen bg-gray-50'>
@@ -44,7 +44,7 @@ function GameSessionsPage() {
                                 <div
                                     key={username}
                                     className='cursor-pointer bg-white font-semibold p-2 border rounded shadow-lg text-cred text-center hover:bg-gray-50'
-                                    onClick={() => handleUserClick(username)}
+                                    onClick={() => routeChange(username)}
                                 >
                                     {username}
                                 </div>
