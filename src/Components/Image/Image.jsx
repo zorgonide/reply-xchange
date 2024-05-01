@@ -6,7 +6,7 @@ function Image({ image, toggleImageSelection, selectedImages, selectImages }) {
             <input
                 type='checkbox'
                 className='custom-checkbox absolute top-0 right-0 m-2 z-10'
-                checked={selectedImages.some((e) => e.id === image.id)}
+                checked={selectedImages.id === image.id}
                 readOnly
                 style={{ display: selectImages ? 'block' : 'none' }}
             />
