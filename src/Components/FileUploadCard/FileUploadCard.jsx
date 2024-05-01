@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Cat from '../../assets/cat.gif';
+import { useNavigate } from 'react-router-dom';
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
@@ -8,6 +9,7 @@ function FileUploadCard() {
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
+    let navigate = useNavigate();
 
     const checkName = (name) => {
         const regex = /^[a-zA-Z0-9_]*$/;
@@ -33,9 +35,8 @@ function FileUploadCard() {
                 headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
             })
             .then((response) => response.data)
-            .then((response) => {
+            .then(() => {
                 setUploadSuccess('Username checked... uploading file...');
-                console.log(JSON.stringify(response));
             })
             .then(() => {
                 axios
@@ -49,6 +50,7 @@ function FileUploadCard() {
                         setUploadSuccess('Upload successful!');
                         setSelectedFile(null);
                         setName('');
+                        navigate('game');
                     });
             })
             .catch((error) => {
@@ -60,6 +62,8 @@ function FileUploadCard() {
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-gray-50'>
             <div className='bg-white p-6 w-full max-w-lg shadow-md rounded-lg'>
+                <p className='text-center font-semibold text-xl text-cred mb-3'>Comwrap Clash: Artist or Algorithm</p>
+                <p className='text-center text-md font-light text-gray-700 mb-3'>Can you tell what is real?</p>
                 <form onSubmit={handleSubmit} className='space-y-4'>
                     <div className='flex items-center justify-center w-ful'>
                         <label
