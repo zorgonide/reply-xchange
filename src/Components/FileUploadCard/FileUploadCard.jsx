@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Drawing from '../../assets/drawing.svg';
+import Cat from '../../assets/cat.gif';
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
@@ -22,14 +22,14 @@ function FileUploadCard() {
             alert('Please fill required fields');
             return;
         }
+        let uniqueName = name.replace(/\s+/g, '') + Math.floor(Math.random() * 101);
 
         let data = new FormData();
-        data.append('username', name.replace(/\s+/g, ''));
+        data.append('username', uniqueName);
         data.append('file', selectedFile);
-        // data.append('preset', selectedOption);
 
         axios
-            .post('http://localhost:4502/bin/checkUsername?username=' + name.replace(/\s+/g, ''), null, {
+            .post('http://localhost:4502/bin/checkUsername?username=' + uniqueName, null, {
                 headers: { Authorization: 'Basic YWRtaW46YWRtaW4=' },
             })
             .then((response) => response.data)
@@ -45,8 +45,7 @@ function FileUploadCard() {
                             Authorization: 'Basic YWRtaW46YWRtaW4=',
                         },
                     })
-                    .then((response) => {
-                        console.log(response, 'upload successful');
+                    .then(() => {
                         setUploadSuccess('Upload successful!');
                         setSelectedFile(null);
                         setName('');
@@ -60,12 +59,14 @@ function FileUploadCard() {
 
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-gray-50'>
-            <div className='bg-white p-6 w-full max-w-md shadow-md rounded-lg'>
+            <div className='bg-white p-6 w-full max-w-lg shadow-md rounded-lg'>
                 <form onSubmit={handleSubmit} className='space-y-4'>
                     <div className='flex items-center justify-center w-ful'>
                         <label
                             htmlFor='dropzone-file'
-                            className='flex flex-col items-center justify-center w-full h-34 border-2 border-cred border-dashed rounded-lg cursor-pointer hover:bg-gray-100'
+                            className={`flex flex-col items-center justify-center w-full h-34 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100 ${
+                                selectedFile ? 'border-cred' : 'border-gray-300'
+                            }`}
                         >
                             <div className='flex flex-col items-center justify-center pt-5 pb-6'>
                                 {!selectedFile && (
@@ -92,7 +93,7 @@ function FileUploadCard() {
                                 )}
                                 {selectedFile && (
                                     <div className='px-4'>
-                                        <img src={Drawing} alt='Preview' className='mt-4 rounded-lg max-w-full h-auto' />
+                                        <img src={Cat} alt='Preview' className='mt-4 rounded-lg max-w-full h-auto' />
                                     </div>
                                 )}
                             </div>

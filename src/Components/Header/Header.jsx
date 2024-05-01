@@ -9,8 +9,11 @@ function Header() {
                     <li>
                         <Link to='/'>Upload</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to='/gallery'>Gallery</Link>
+                    </li> */}
+                    <li>
+                        <Link to='/game'>Game</Link>
                     </li>
                 </ul>
                 <div className=''>

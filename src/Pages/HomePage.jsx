@@ -3,6 +3,7 @@ import FileUploadCard from '../Components/FileUploadCard/FileUploadCard';
 import Header from '../Components/Header/Header'; // Adjust the import path as needed
 import { Route, Routes } from 'react-router';
 import GalleryPage from './GalleryPage';
+import GamePage from './GamePage';
 
 function HomePage() {
     return (
@@ -11,6 +12,7 @@ function HomePage() {
             <Routes>
                 <Route path='/' element={<FileUploadCard />} />
                 <Route path='/gallery' element={<GalleryPage />} />
+                <Route path='/game' element={<GamePage />} />
             </Routes>
         </>
     );
