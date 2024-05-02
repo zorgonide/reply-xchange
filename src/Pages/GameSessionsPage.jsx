@@ -2,12 +2,28 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cat from '../assets/cat-magic.gif';
 import { useNavigate } from 'react-router-dom';
+import NameTile from '../Components/NameTile/NameTile';
 function GameSessionsPage() {
     const [usernames, setUsernames] = useState([]);
+    const [cats, setCats] = useState([]);
+    const [length, setLength] = useState(0);
     let navigate = useNavigate();
     const routeChange = (username) => {
         let path = `/game/${username}`;
         navigate(path);
+    };
+    const getCats = async (limit) => {
+        try {
+            const response = await axios.get('https://api.thecatapi.com/v1/images/search?limit=' + limit, {
+                headers: {
+                    'x-api-key': 'live_rVPCr1yWe8e98YSccUHVmyfLkuXzHxNyhZZrpT2p7B6sYvVJb5gxuCJHWZh3DAGk',
+                },
+            });
+            let data = await response.data;
+            setCats(data);
+        } catch (error) {
+            console.error('Failed to fetch cat image:', error);
+        }
     };
     const fetchUsernames = async () => {
         try {
@@ -18,7 +34,9 @@ function GameSessionsPage() {
             });
             let data = await response.data;
             if (Array.isArray(data)) {
+                if (data.length > length) getCats(data.length);
                 setUsernames(data);
+                setLength(data.length);
             } else throw new Error('Invalid response from server');
         } catch (error) {
             console.error('Failed to fetch usernames:', error);
@@ -27,7 +45,6 @@ function GameSessionsPage() {
     useEffect(() => {
         fetchUsernames();
         const intervalId = setInterval(fetchUsernames, 3000); // Fetch usernames every 5 seconds
-
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
     }, []);
@@ -45,14 +62,8 @@ function GameSessionsPage() {
                     <div className='grow'>
                         <h1 className='text-xl font-semibold text-gray-700 mb-4'>Select a Game Session</h1>
                         <div className='grid grid-cols-3 gap-4'>
-                            {usernames.map((username) => (
-                                <div
-                                    key={username}
-                                    className='cursor-pointer bg-white font-semibold p-2 border border-cred rounded shadow-sm text-cred text-center hover:bg-gray-50'
-                                    onClick={() => routeChange(username)}
-                                >
-                                    {username.replace(/[^a-zA-Z]/g, '')}
-                                </div>
+                            {usernames.map((username, i) => (
+                                <NameTile key={username} username={username} routeChange={routeChange} cat={cats[i]?.url} />
                             ))}
                         </div>
                     </div>

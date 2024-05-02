@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Cat from '../../assets/cat.gif';
+import Artist from '../../assets/drawing.svg';
 import { useNavigate } from 'react-router-dom';
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -75,7 +76,10 @@ function FileUploadCard() {
                             <div className='flex flex-col items-center justify-center pt-5 pb-6'>
                                 {!selectedFile && (
                                     <>
-                                        <svg
+                                        <div className='px-4'>
+                                            <img src={Artist} alt='Preview' className='my-4 rounded-lg max-w-full h-auto' />
+                                        </div>
+                                        {/* <svg
                                             className='w-8 h-8 mb-4 text-gray-600'
                                             aria-hidden='true'
                                             fill='none'
@@ -88,7 +92,7 @@ function FileUploadCard() {
                                                 strokeWidth={2}
                                                 d='M7 7l5-5m0 0l5 5m-5-5v18M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10M9 21h6'
                                             />
-                                        </svg>
+                                        </svg> */}
                                         <p className='mb-2 text-sm text-gray-700'>
                                             <span className='font-semibold'>Click to upload</span> or drag and drop
                                         </p>
