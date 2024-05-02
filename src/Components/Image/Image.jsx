@@ -1,8 +1,12 @@
 import React from 'react';
 
-function Image({ image, toggleImageSelection, selectedImages, selectImages }) {
+function Image({ image, toggleImageSelection, selectedImages, selectImages, incorrectSelection = [] }) {
     return (
-        <div key={image.id} className='image-container bg-gray-200 p-1' onClick={() => toggleImageSelection(image)}>
+        <div
+            key={image.id}
+            className={`image-container  p-1 ${incorrectSelection.some((e) => e.id === image.id) ? 'opacity-20 bg-cred' : 'bg-gray-200'}`}
+            onClick={() => toggleImageSelection(image)}
+        >
             <input
                 type='checkbox'
                 className='custom-checkbox absolute top-0 right-0 m-2 z-10'

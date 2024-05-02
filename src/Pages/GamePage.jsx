@@ -7,7 +7,8 @@ import Confetti from 'react-confetti';
 function GamePage() {
     const [images, setImages] = useState([]);
     const [status, setStatus] = useState(false);
-    const [selectedImages, setSelectedImage] = useState([]);
+    const [selectedImage, setSelectedImage] = useState([]);
+    const [incorrectSelection, setIncorrectSelection] = useState([]);
     const { id } = useParams();
     const { width, height } = useWindowSize();
     function randomSort(arr) {
@@ -36,31 +37,34 @@ function GamePage() {
         setSelectedImage(image);
     };
     const checkSelection = () => {
-        if (!selectedImages.source) {
+        if (!selectedImage.source) {
             setStatus(true);
         } else {
-            alert('you got that wrong!');
+            setIncorrectSelection([...incorrectSelection, selectedImage]);
+            // alert('you got that wrong!');
         }
     };
     return (
-        <div className='container mx-auto p-4'>
+        <div className='container mx-auto p-4 min-h-screen'>
+            <h1 className='text-2xl text-gray-700 font-semibold mb-4'>Select the image that is human</h1>
             <div className='grid grid-cols-3'>
                 {images.map((image) => (
                     <Image
                         key={image.id}
                         image={image}
                         toggleImageSelection={toggleImageSelection}
-                        selectedImages={selectedImages}
+                        selectedImages={selectedImage}
                         selectImages={true}
+                        incorrectSelection={incorrectSelection}
                     />
                 ))}
             </div>
-            {selectedImages.id && (
-                <div className='bg-gray-400 text-white fixed p-4 bottom-0 left-0 right-0 z-50'>
+            {selectedImage.id && (
+                <div className='bg-gray-200 text-white fixed p-4 bottom-0 left-0 right-0 z-50'>
                     <div className='flex justify-end'>
                         <button
                             onClick={() => checkSelection()}
-                            className='px-4 py-2 border border-transparent shadow-md text-md font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 '
+                            className='px-4 py-2 border border-transparent shadow-md text-md font-medium rounded-md text-white bg-cred hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 '
                         >
                             Select
                         </button>

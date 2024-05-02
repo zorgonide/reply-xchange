@@ -93,6 +93,7 @@ function GalleryPage() {
                         toggleImageSelection={toggleImageSelection}
                         selectedImages={selectedImages}
                         selectImages={selectImages}
+                        className='image-container bg-gray-200 p-1'
                     />
                 ))}
             </div>

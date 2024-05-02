@@ -39,11 +39,11 @@ function GameSessionsPage() {
                     <div className='flex flex-col flex-start'>
                         <div className='cat '>
                             <img src={Cat} alt='cat' className='object-contain' />
-                            <p className='text-center font-semibold my-4'>While you wait, Catto is doing its magic</p>
+                            <p className='text-center text-gray-700 text-lg font-semibold my-4'>While you wait, Catto is doing its magic</p>
                         </div>
                     </div>
                     <div className='grow'>
-                        <h1 className='text-lg font-semibold text-gray-700 mb-4'>Select a Game Session</h1>
+                        <h1 className='text-xl font-semibold text-gray-700 mb-4'>Select a Game Session</h1>
                         <div className='grid grid-cols-3 gap-4'>
                             {usernames.map((username) => (
                                 <div
