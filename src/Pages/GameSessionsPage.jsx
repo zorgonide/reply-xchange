@@ -25,29 +25,29 @@ function GameSessionsPage() {
             console.error('Failed to fetch cat image:', error);
         }
     };
-    const fetchUsernames = async () => {
-        try {
-            const response = await axios.get('http://localhost:4502/bin/getGame', {
-                headers: {
-                    Authorization: 'Basic YWRtaW46YWRtaW4=',
-                },
-            });
-            let data = await response.data;
-            if (Array.isArray(data)) {
-                if (data.length > length) getCats(data.length);
-                setUsernames(data);
-                setLength(data.length);
-            } else throw new Error('Invalid response from server');
-        } catch (error) {
-            console.error('Failed to fetch usernames:', error);
-        }
-    };
     useEffect(() => {
+        const fetchUsernames = async () => {
+            try {
+                const response = await axios.get('http://localhost:4502/bin/getGame', {
+                    headers: {
+                        Authorization: 'Basic YWRtaW46YWRtaW4=',
+                    },
+                });
+                let data = await response.data;
+                if (Array.isArray(data)) {
+                    if (data.length > length) getCats(data.length);
+                    setUsernames(data);
+                    setLength(data.length);
+                } else throw new Error('Invalid response from server');
+            } catch (error) {
+                console.error('Failed to fetch usernames:', error);
+            }
+        };
         fetchUsernames();
         const intervalId = setInterval(fetchUsernames, 3000); // Fetch usernames every 5 seconds
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
-    }, []);
+    }, [length]);
 
     return (
         <div className='flex flex-col min-h-screen bg-gray-50'>
