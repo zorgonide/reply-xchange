@@ -7,7 +7,7 @@
 .image-container {
     position: relative;
     cursor: pointer;
-    aspect-ratio: 1/1;
+    /* aspect-ratio: 1/1; */
 }
 .image-container:hover {
     img {
