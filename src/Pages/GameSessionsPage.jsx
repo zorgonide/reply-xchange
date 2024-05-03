@@ -52,19 +52,19 @@ function GameSessionsPage() {
     return (
         <div className='flex flex-col min-h-screen bg-gray-50'>
             <div className='container p-4 mx-auto'>
-                <div className='flex gap-4'>
-                    <div className='flex flex-col flex-start'>
-                        <div className='cat '>
-                            <img src={Cat} alt='cat' className='object-contain' />
-                            <p className='text-center text-gray-700 text-lg font-semibold my-4'>While you wait, Catto is doing its magic</p>
-                        </div>
-                    </div>
+                <div className='flex gap-9'>
                     <div className='grow'>
                         <h1 className='text-xl font-semibold text-gray-700 mb-4'>Select a Game Session</h1>
                         <div className='grid grid-cols-3 gap-4'>
                             {usernames.map((username, i) => (
                                 <NameTile key={username} username={username} routeChange={routeChange} cat={cats[i]?.url} />
                             ))}
+                        </div>
+                    </div>
+                    <div className='flex flex-col flex-start'>
+                        <div className='cat '>
+                            <img src={Cat} alt='cat' className='object-contain' />
+                            <p className='text-center text-gray-700 text-lg font-semibold my-4'>While you wait, Catto is doing its magic</p>
                         </div>
                     </div>
                 </div>
