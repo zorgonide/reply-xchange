@@ -38,7 +38,7 @@ function GameSessionsPage() {
                 <div className='flex gap-9'>
                     <div className='grow'>
                         <h1 className='text-2xl font-semibold text-gray-700 mb-4'>Select a Game Session</h1>
-                        <div className='grid grid-cols-4 gap-4'>
+                        <div className='grid grid-cols-5 gap-4'>
                             <div className='bg-white min-h-64 font-semibold border shadow-sm flex flex-col items-center'>
                                 <img src={Cat} alt={`magico`} className='object-contain rounded-none h-56 my-auto' />
                             </div>
