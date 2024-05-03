@@ -5,25 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import NameTile from '../Components/NameTile/NameTile';
 function GameSessionsPage() {
     const [usernames, setUsernames] = useState([]);
-    const [cats, setCats] = useState([]);
-    const [length, setLength] = useState(0);
     let navigate = useNavigate();
     const routeChange = (username) => {
         let path = `/game/${username}`;
         navigate(path);
-    };
-    const getCats = async (limit) => {
-        try {
-            const response = await axios.get('https://api.thecatapi.com/v1/images/search?limit=' + limit, {
-                headers: {
-                    'x-api-key': 'live_rVPCr1yWe8e98YSccUHVmyfLkuXzHxNyhZZrpT2p7B6sYvVJb5gxuCJHWZh3DAGk',
-                },
-            });
-            let data = await response.data;
-            setCats(data);
-        } catch (error) {
-            console.error('Failed to fetch cat image:', error);
-        }
     };
     useEffect(() => {
         const fetchUsernames = async () => {
@@ -35,9 +20,7 @@ function GameSessionsPage() {
                 });
                 let data = await response.data;
                 if (Array.isArray(data)) {
-                    if (data.length > length) getCats(data.length);
                     setUsernames(data);
-                    setLength(data.length);
                 } else throw new Error('Invalid response from server');
             } catch (error) {
                 console.error('Failed to fetch usernames:', error);
@@ -47,7 +30,7 @@ function GameSessionsPage() {
         const intervalId = setInterval(fetchUsernames, 3000); // Fetch usernames every 5 seconds
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
-    }, [length]);
+    }, []);
 
     return (
         <div className='flex flex-col min-h-screen bg-gray-50'>
@@ -55,16 +38,13 @@ function GameSessionsPage() {
                 <div className='flex gap-9'>
                     <div className='grow'>
                         <h1 className='text-xl font-semibold text-gray-700 mb-4'>Select a Game Session</h1>
-                        <div className='grid grid-cols-3 gap-4'>
+                        <div className='grid grid-cols-4 gap-4'>
+                            <div className='bg-white min-h-64 font-semibold border shadow-sm text-cred text-center hover:bg-gray-50 '>
+                                <img src={Cat} alt={`magico`} className='object-contain rounded-none h-56 my-4' />
+                            </div>
                             {usernames.map((username, i) => (
-                                <NameTile key={username} username={username} routeChange={routeChange} cat={cats[i]?.url} />
+                                <NameTile key={username} username={username} routeChange={routeChange} index={i} />
                             ))}
-                        </div>
-                    </div>
-                    <div className='flex flex-col flex-start'>
-                        <div className='cat '>
-                            <img src={Cat} alt='cat' className='object-contain' />
-                            <p className='text-center text-gray-700 text-lg font-semibold my-4'>While you wait, Catto is doing its magic</p>
                         </div>
                     </div>
                 </div>
