@@ -4,6 +4,7 @@ import Image from '../Components/Image/Image';
 import { useParams } from 'react-router-dom';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Confetti from 'react-confetti';
+import './GamePage.css';
 function GamePage() {
     const [images, setImages] = useState([]);
     const [status, setStatus] = useState(false);
@@ -45,17 +46,17 @@ function GamePage() {
         }
     };
     return (
-        <div className='container mx-auto p-4 min-h-screen'>
+        <div className='container mx-auto p-4 game-image-container flex flex-col'>
             <h1 className='text-2xl text-gray-700 font-semibold mb-4'>Select the image that is human</h1>
-            <div className='grid grid-cols-3'>
-                {images.map((image) => (
+            <div className='grid grid-cols-3 gap-9 grow'>
+                {images.map((image, i) => (
                     <Image
                         key={image.id}
                         image={image}
                         toggleImageSelection={toggleImageSelection}
                         selectedImages={selectedImage}
-                        selectImages={true}
                         incorrectSelection={incorrectSelection}
+                        index={i}
                     />
                 ))}
             </div>
@@ -79,9 +80,9 @@ function GamePage() {
                 initialVelocityY={5}
                 run={status}
                 numberOfPieces={400}
-                onConfettiComplete={() => {
-                    alert('You got it right!');
-                }}
+                // onConfettiComplete={() => {
+                //     alert('You got it right!');
+                // }}
             />
         </div>
     );
