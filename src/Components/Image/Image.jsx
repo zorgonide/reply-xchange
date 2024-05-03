@@ -15,7 +15,7 @@ function Image({ image, toggleImageSelection, selectedImages, index, incorrectSe
                     <img src={image.url} alt={image.title} className='rounded-none' />
                 </div>
             </div>
-            <p className='text-center mt-3'>Photo #{index + 1}</p>
+            <p className='text-center my-4'>Photo #{index + 1}</p>
         </div>
     );
 }
