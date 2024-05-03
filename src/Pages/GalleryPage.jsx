@@ -15,7 +15,7 @@ function GalleryPage() {
     const [dropdownOption, setDropdownOption] = React.useState('all');
     const getImages = () => {
         axios
-            .get('http://localhost:4502/bin/getassets', {
+            .get('http://localhost:4502/bin/getAssetsAll', {
                 headers: {
                     Authorization: 'Basic YWRtaW46YWRtaW4=',
                 },
@@ -87,13 +87,14 @@ function GalleryPage() {
             </div>
             <div className='grid grid-cols-4 gap-4'>
                 {images.map((image) => (
-                    <Image
-                        key={image.id}
-                        image={image}
-                        toggleImageSelection={toggleImageSelection}
-                        selectedImages={selectedImages}
-                        selectImages={selectImages}
-                    />
+                    // <Image
+                    //     key={image.id}
+                    //     image={image}
+                    //     toggleImageSelection={toggleImageSelection}
+                    //     selectedImages={selectedImages}
+                    //     selectImages={selectImages}
+                    // />
+                    <img src={'http://localhost:4502' + image.url} alt={image.name} className='object-cover h-64 w-full' />
                 ))}
             </div>
             {selectedImages.length > 0 && <Footer images={selectedImages} />}
