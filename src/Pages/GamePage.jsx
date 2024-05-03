@@ -57,6 +57,7 @@ function GamePage() {
                         selectedImages={selectedImage}
                         incorrectSelection={incorrectSelection}
                         index={i}
+                        name={id.replace(/[^a-zA-Z]/g, '')}
                     />
                 ))}
             </div>

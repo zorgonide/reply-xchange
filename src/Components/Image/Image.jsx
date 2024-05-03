@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Image({ image, toggleImageSelection, selectedImages, index, incorrectSelection = [] }) {
+function Image({ image, toggleImageSelection, selectedImages, index, incorrectSelection = [], name }) {
     return (
         <div
             key={image.id}
@@ -15,7 +15,9 @@ function Image({ image, toggleImageSelection, selectedImages, index, incorrectSe
                     <img src={image.url} alt={image.title} className='rounded-none' />
                 </div>
             </div>
-            <p className='text-center my-4'>Photo #{index + 1}</p>
+            <p className='text-center my-4'>
+                {name} #{index + 1}
+            </p>
         </div>
     );
 }
