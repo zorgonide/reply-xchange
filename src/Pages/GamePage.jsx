@@ -48,7 +48,7 @@ function GamePage() {
     return (
         <div className='container mx-auto p-4 game-image-container flex flex-col'>
             <h1 className='text-2xl text-gray-700 font-semibold mb-5'>Select the image that is human</h1>
-            <div className='grid grid-cols-3 gap-9 grow'>
+            <div className='flex flex-wrap gap-9 grow'>
                 {images.map((image, i) => (
                     <Image
                         key={image.id}
