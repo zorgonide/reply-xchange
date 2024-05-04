@@ -86,15 +86,17 @@ function GalleryPage() {
                 </div>
             </div>
             <div className='grid grid-cols-4 gap-4'>
-                {images.map((image) => (
-                    // <Image
-                    //     key={image.id}
-                    //     image={image}
-                    //     toggleImageSelection={toggleImageSelection}
-                    //     selectedImages={selectedImages}
-                    //     selectImages={selectImages}
-                    // />
-                    <img src={'http://localhost:4502' + image.url} alt={image.name} className='object-cover h-64 w-full' />
+                {images.map((image, index) => (
+                    <Image
+                        key={image.id}
+                        image={image}
+                        toggleImageSelection={toggleImageSelection}
+                        selectedImages={selectedImages}
+                        selectImages={selectImages}
+                        name={'Photo'}
+                        index={index}
+                    />
+                    // <img src={'http://localhost:4502' + image.url} alt={image.name} className='object-cover h-64 w-full' />
                 ))}
             </div>
             {selectedImages.length > 0 && <Footer images={selectedImages} />}
