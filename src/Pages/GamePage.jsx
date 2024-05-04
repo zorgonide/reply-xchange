@@ -62,7 +62,7 @@ function GamePage() {
                 ))}
             </div>
             {selectedImage.id && (
-                <div className='bg-gray-200 text-white fixed p-4 bottom-0 left-0 right-0 z-50'>
+                <div className='bg-gray-200 text-white fixed p-2 bottom-0 left-0 right-0 z-50'>
                     <div className='flex justify-end'>
                         <button
                             onClick={() => checkSelection()}
