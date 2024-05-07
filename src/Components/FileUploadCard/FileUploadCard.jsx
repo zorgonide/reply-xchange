@@ -62,7 +62,7 @@ function FileUploadCard() {
 
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-gray-50'>
-            <div className='bg-white p-6 w-full max-w-lg shadow-md rounded-lg'>
+            <div className='bg-white p-6 w-full max-w-lg shadow-xl rounded-none'>
                 <p className='text-center font-semibold text-xl text-cred mb-3'>Comwrap Clash: Artist or Algorithm</p>
                 <p className='text-center text-md font-light text-gray-700 mb-3'>Can you tell what is real?</p>
                 <form onSubmit={handleSubmit} className='space-y-4'>
