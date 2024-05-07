@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 function Header() {
     return (
-        <header className='bg-cred  text-lg text-white px-4 top-0 left-0 right-0 z-50'>
+        <header className='bg-cred text-lg text-white px-4 top-0 left-0 right-0 z-50'>
             <nav className='flex justify-between items-center'>
                 <ul className='flex justify-start space-x-4'>
                     <li>
@@ -13,7 +13,9 @@ function Header() {
                         <Link to='/gallery'>Gallery</Link>
                     </li>
                     <li>
-                        <Link to='/game'>Game</Link>
+                        <Link to='/game' className='font-mono font-semibold bg-white text-cred rounded p-2'>
+                            Play!
+                        </Link>
                     </li>
                 </ul>
                 <div className=''>
