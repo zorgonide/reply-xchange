@@ -13,7 +13,10 @@ function Header() {
                         <Link to='/gallery'>Gallery</Link>
                     </li>
                     <li>
-                        <Link to='/game' className='font-mono font-semibold bg-white text-cred rounded p-2'>
+                        <Link
+                            to='/game'
+                            className='font-mono font-semibold bg-white text-cred rounded p-2 hover:bg-cred hover:text-white transition-all duration-500'
+                        >
                             Play!
                         </Link>
                     </li>
