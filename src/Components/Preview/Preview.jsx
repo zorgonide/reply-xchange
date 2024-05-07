@@ -24,7 +24,24 @@ function Preview({ image, onClose }) {
             onClose();
         }
     };
+    function ImageToPrint(source) {
+        return (
+            '<html><head><script>function step1(){setTimeout("step2()", 10);}</script>' +
+            '<script>function step2(){window.print();window.close();}</script></head>' +
+            '<body onload="step1()" >' +
+            '<img src="' +
+            source +
+            '" style="border: 5px solid #f91351;"/></body></html> '
+        );
+    }
 
+    function PrintImage(source) {
+        var Pagelink = 'about:blank';
+        var pwa = window.open(Pagelink, '_new');
+        pwa.document.open();
+        pwa.document.write(ImageToPrint(source));
+        pwa.document.close();
+    }
     return (
         <div
             className='fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50'
@@ -47,7 +64,12 @@ function Preview({ image, onClose }) {
                         </svg>
                     </button>
                     <div className='overflow-auto'>
-                        <img src={image.url} alt='Preview' className='mx-auto' style={{ maxHeight: '80vh' }} />
+                        <img src={image.url} alt='Preview' className='mx-auto' style={{ maxHeight: '70vh' }} />
+                    </div>
+                    <div className='print-section flex justify-center mt-4'>
+                        <button className='bg-cred font-bold uppercase text-white p-2 rounded-md' onClick={() => PrintImage(image.url)}>
+                            Print
+                        </button>
                     </div>
                 </div>
             </div>
