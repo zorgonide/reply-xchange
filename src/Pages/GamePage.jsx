@@ -46,8 +46,14 @@ function GamePage() {
     };
     return (
         <div className='container mx-auto p-4 game-image-container flex flex-col'>
-            <h1 className='text-2xl text-gray-700 font-semibold mb-5'>Select the image that is human</h1>
-            <div className='flex flex-wrap gap-9 grow'>
+            <div className='flex flex-wrap gap-9 grow mt-5'>
+                <div className='image-container-polaroid mx-auto  p-9'>
+                    <div className='image-cover' style={{ background: 'white' }}>
+                        <p className='text-4xl my-9'>
+                            Can you tell what is <span className='font-bold text-cred'>Real</span>?
+                        </p>
+                    </div>
+                </div>
                 {images.map((image, i) => (
                     <Image
                         key={image.id}
