@@ -10,6 +10,7 @@ function GameSessionsPage() {
         let path = `/game/${username}`;
         navigate(path);
     };
+
     useEffect(() => {
         const fetchUsernames = async () => {
             try {
@@ -19,8 +20,9 @@ function GameSessionsPage() {
                     },
                 });
                 let data = await response.data;
+                let usernames = data.map((item) => item.name);
                 if (Array.isArray(data)) {
-                    setUsernames(data);
+                    setUsernames(usernames.reverse());
                 } else throw new Error('Invalid response from server');
             } catch (error) {
                 console.error('Failed to fetch usernames:', error);
@@ -43,7 +45,7 @@ function GameSessionsPage() {
                             </div>
                             <div className='bg-white  border shadow-sm flex flex-col items-center p-4'>
                                 <p className='text-4xl font-mono'>
-                                    Please wait while <span className='font-bold text-cred'>Catto</span> does its magic✨
+                                    Please wait while <span className='font-bold text-cred'>Comwrap Cat</span> does its magic✨
                                 </p>
                             </div>
                             {usernames.map((username, i) => (
