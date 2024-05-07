@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
-
+import { useLinkedIn } from 'react-linkedin-login-oauth2';
+// You can use provided image shipped by this package or using your own
+import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 function Preview({ image, onClose }) {
     const handleKeyUp = useCallback(
         (event) => {
@@ -9,6 +11,16 @@ function Preview({ image, onClose }) {
         },
         [onClose]
     );
+    const { linkedInLogin } = useLinkedIn({
+        clientId: '78gcq4br7990pn',
+        redirectUri: `http://localhost:3000/gallery`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
+        onSuccess: (code) => {
+            console.log(code);
+        },
+        onError: (error) => {
+            console.log(error);
+        },
+    });
 
     useEffect(() => {
         window.addEventListener('keyup', handleKeyUp);
@@ -26,12 +38,17 @@ function Preview({ image, onClose }) {
     };
     function ImageToPrint(source) {
         return (
-            '<html><head><script>function step1(){setTimeout("step2()", 10);}</script>' +
+            '<html><head><style>' +
+            'body { position: relative; }' +
+            '#logo { position: absolute; top: 10px; right: 10px; max-width: 180px }' +
+            '</style><script>function step1(){setTimeout("step2()", 10);}</script>' +
             '<script>function step2(){window.print();window.close();}</script></head>' +
-            '<body onload="step1()" >' +
+            '<body onload="step1()">' +
+            `<img id="logo" src="http://localhost:4502/content/dam/xchange/logopic.png"/>` +
             '<img src="' +
             source +
-            '" style="border: 5px solid #f91351;"/></body></html> '
+            '" style="border: 5px solid #f91351; display: block; margin: 0 auto;"/>' +
+            '</body></html>'
         );
     }
 
@@ -42,6 +59,7 @@ function Preview({ image, onClose }) {
         pwa.document.write(ImageToPrint(source));
         pwa.document.close();
     }
+
     return (
         <div
             className='fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50'
@@ -66,10 +84,30 @@ function Preview({ image, onClose }) {
                     <div className='overflow-auto'>
                         <img src={image.url} alt='Preview' className='mx-auto' style={{ maxHeight: '70vh' }} />
                     </div>
-                    <div className='print-section flex justify-center mt-4'>
-                        <button className='bg-cred font-bold uppercase text-white p-2 rounded-md' onClick={() => PrintImage(image.url)}>
+                    <div className='print-section flex justify-end mt-4'>
+                        <button className='bg-cred font-bold text-white p-2 rounded-md flex items-center' onClick={() => PrintImage(image.url)}>
+                            <svg
+                                className='w-5 h-5 mr-2'
+                                fill='none'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                                strokeWidth='2'
+                                viewBox='0 0 24 24'
+                                stroke='currentColor'
+                            >
+                                <path d='M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-6a2 2 0 012-2h16a2 2 0 012 2v6a2 2 0 01-2 2h-2'></path>
+                                <path d='M6 14h12v8H6z'></path>
+                                <path d='M8 14v4m8-4v4m-6 4v2m4-2v2'></path>
+                            </svg>
                             Print
                         </button>
+                        <img
+                            onClick={linkedInLogin}
+                            src={linkedin}
+                            alt='Sign in with Linked In'
+                            style={{ maxWidth: '240px', cursor: 'pointer', minHeight: '40px' }}
+                            className='ml-4 '
+                        />
                     </div>
                 </div>
             </div>
