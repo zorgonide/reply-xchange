@@ -12,7 +12,7 @@ function Preview({ image, onClose }) {
         [onClose]
     );
     const { linkedInLogin } = useLinkedIn({
-        clientId: '78gcq4br7990pn',
+        clientId: process.env.LINKEDIN_CLIENTID,
         redirectUri: `http://localhost:3000/gallery`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
         onSuccess: (code) => {
             console.log(code);
