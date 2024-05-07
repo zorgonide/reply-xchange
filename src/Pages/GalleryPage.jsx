@@ -9,7 +9,7 @@ function GalleryPage() {
     const [images, setImages] = useState([]);
     const [originalImages, setOriginalImages] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]);
-    const [selectImages, setSelectImages] = useState(false);
+    const [selectImagesButtonClicked, setSelectImages] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [previewImage, setPreviewImage] = useState(null);
     const [dropdownOption, setDropdownOption] = React.useState('all');
@@ -32,14 +32,8 @@ function GalleryPage() {
         getImages();
     }, []);
     const toggleImageSelection = (image) => {
-        if (selectImages) {
-            setSelectedImages((prevSelectedImages) => {
-                if (prevSelectedImages.some((e) => e.id === image.id)) {
-                    return prevSelectedImages.filter((e) => e.id !== image.id);
-                } else {
-                    return [...prevSelectedImages, image];
-                }
-            });
+        if (selectImagesButtonClicked) {
+            setSelectedImages(image);
         } else {
             setPreviewImage(image);
             setShowModal(true);
@@ -73,11 +67,11 @@ function GalleryPage() {
                 <div className='flex space-x-4'>
                     <button
                         onClick={() => {
-                            setSelectImages(!selectImages);
+                            setSelectImages(!selectImagesButtonClicked);
                             setSelectedImages([]);
                         }}
                         className={`font-bold py-2 px-4 rounded border border-black transition-colors duration-150 ${
-                            selectImages ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'
+                            selectImagesButtonClicked ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'
                         }`}
                     >
                         Select Images
@@ -92,14 +86,12 @@ function GalleryPage() {
                         image={image}
                         toggleImageSelection={toggleImageSelection}
                         selectedImages={selectedImages}
-                        selectImages={selectImages}
                         name={'Photo'}
                         index={index}
                     />
-                    // <img src={'http://localhost:4502' + image.url} alt={image.name} className='object-cover h-64 w-full' />
                 ))}
             </div>
-            {selectedImages.length > 0 && <Footer images={selectedImages} />}
+            {selectedImages.id && <Footer images={selectedImages} />}
             {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} />}
         </div>
     );

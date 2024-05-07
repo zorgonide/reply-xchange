@@ -48,7 +48,7 @@ function Footer({ images }) {
 
     return (
         <>
-            <div className='bg-gray-400 text-white fixed p-4 bottom-0 left-0 right-0 z-50'>
+            <div className='bg-gray-400 text-white fixed p-4 bottom-0 left-0 right-0 z-40'>
                 <div className='flex justify-end'>
                     <button
                         onClick={() => setShowModal(true)}
@@ -60,7 +60,7 @@ function Footer({ images }) {
             </div>
             {showModal && (
                 <div className='fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full' id='my-modal'>
-                    <div className='relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white'>
+                    <div className='relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white z-50'>
                         <h3 className='text-lg font-medium leading-6 text-gray-900'>Send Email</h3>
                         {isLoading ? ( // Check if loading
                             <div className='flex justify-center items-center'>

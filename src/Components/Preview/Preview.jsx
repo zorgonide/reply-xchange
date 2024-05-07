@@ -33,7 +33,6 @@ function Preview({ image, onClose }) {
         >
             <div className='flex justify-center items-center h-full'>
                 <div className='relative mx-auto p-5 max-w-4xl max-h-full bg-white rounded-md shadow-lg'>
-                    <h3 className='text-lg font-medium leading-6 text-gray-900 mb-4'>Image Preview</h3>
                     <button onClick={onClose} className='absolute top-0 right-0 mt-4 mr-4 text-gray-700 hover:text-gray-900' aria-label='Close'>
                         <svg
                             className='w-6 h-6'
