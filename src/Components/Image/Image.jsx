@@ -1,13 +1,14 @@
 import React from 'react';
 
-function Image({ image, toggleImageSelection, selectedImages, index, incorrectSelection = [], name }) {
+function Image({ image, toggleImageSelection, selectedImages, index, incorrectSelection = [], name, didWin = false }) {
     return (
         <div
             key={image.id}
             className={`image-container-polaroid mx-auto cursor-pointer ${
                 incorrectSelection.some((e) => e.id === image.id) ? 'opacity-20 bg-cred' : 'bg-gray-200'
             }
-            ${selectedImages.id === image.id ? 'border-4 border-cred' : 'border-2 border-gray-400'}`}
+            ${selectedImages.id === image.id ? 'border-4 border-cred' : 'border-2 border-gray-400'}
+            ${didWin & (selectedImages.id === image.id) ? 'border-lime-500' : ''}`}
             onClick={() => toggleImageSelection(image)}
         >
             <div className='image-cover'>

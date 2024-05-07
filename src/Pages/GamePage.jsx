@@ -42,7 +42,6 @@ function GamePage() {
             setStatus(true);
         } else {
             setIncorrectSelection([...incorrectSelection, selectedImage]);
-            // alert('you got that wrong!');
         }
     };
     return (
@@ -58,6 +57,7 @@ function GamePage() {
                         incorrectSelection={incorrectSelection}
                         index={i}
                         name={id.replace(/[^a-zA-Z]/g, '')}
+                        didWin={status}
                     />
                 ))}
             </div>
@@ -73,18 +73,7 @@ function GamePage() {
                     </div>
                 </div>
             )}
-            {/* {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} />} */}
-            <Confetti
-                width={width}
-                height={height}
-                recycle={false}
-                initialVelocityY={5}
-                run={status}
-                numberOfPieces={400}
-                // onConfettiComplete={() => {
-                //     alert('You got it right!');
-                // }}
-            />
+            <Confetti width={width} height={height} recycle={false} initialVelocityY={5} run={status} numberOfPieces={400} />
         </div>
     );
 }
