@@ -1,4 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
+//add print icon
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
 function Preview({ image, onClose, OAuthCode }) {
     const [accessToken, setAccessToken] = useState(null);
     const handleKeyUp = useCallback(
@@ -127,7 +130,7 @@ function Preview({ image, onClose, OAuthCode }) {
             onClick={handleClickOutside}
         >
             <div className='flex justify-center items-center h-full'>
-                <div className='relative mx-auto p-5 max-w-4xl max-h-full bg-white rounded-md shadow-lg'>
+                <div className='relative mx-auto p-5 max-w-4xl max-h-full bg-white rounded-none shadow-lg'>
                     <button onClick={onClose} className='absolute top-0 right-0 mt-4 mr-4 text-gray-700 hover:text-gray-900' aria-label='Close'>
                         <svg
                             className='w-6 h-6'
@@ -145,24 +148,9 @@ function Preview({ image, onClose, OAuthCode }) {
                         <img src={image.url} alt='Preview' className='mx-auto' style={{ maxHeight: '70vh' }} />
                     </div>
                     <div className='print-section flex justify-end mt-4'>
-                        <button className='bg-cred font-bold text-white p-2 rounded-md flex items-center' onClick={() => PrintImage(image.url)}>
-                            <svg
-                                className='w-5 h-5 mr-2'
-                                fill='none'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth='2'
-                                viewBox='0 0 24 24'
-                                stroke='currentColor'
-                            >
-                                <path d='M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-6a2 2 0 012-2h16a2 2 0 012 2v6a2 2 0 01-2 2h-2'></path>
-                                <path d='M6 14h12v8H6z'></path>
-                                <path d='M8 14v4m8-4v4m-6 4v2m4-2v2'></path>
-                            </svg>
+                        <button className='bg-cred font-bold text-white px-3 py-2 rounded-md flex items-center' onClick={() => PrintImage(image.url)}>
+                            <FontAwesomeIcon icon={faPrint} className='mr-2 animate-bounce' />
                             Print
-                        </button>
-                        <button className='bg-cred font-bold text-white p-2 rounded-md ml-2' onClick={handleLinkedInAuth}>
-                            Share to LinkedIn
                         </button>
                     </div>
                 </div>

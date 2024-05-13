@@ -3,7 +3,8 @@ import axios from 'axios';
 import './GalleryPage.css';
 import Footer from '../Components/Footer/Footer';
 import Preview from '../Components/Preview/Preview';
-import RefreshButton from '../Components/RefreshButton/RefreshButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Image from '../Components/Image/Image';
 function GalleryPage() {
     const [images, setImages] = useState([]);
@@ -74,9 +75,10 @@ function GalleryPage() {
                             selectImagesButtonClicked ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'
                         }`}
                     >
+                        <FontAwesomeIcon icon={faCheck} className='mr-2' />
                         Select Images
                     </button>
-                    <RefreshButton getImages={getImages} />
+                    {/* <RefreshButton getImages={getImages} /> */}
                 </div>
             </div>
             <div className='grid grid-cols-4 gap-4'>

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-
+//add share icon
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
 function Footer({ images }) {
     const [showModal, setShowModal] = useState(false);
     const [email, setEmail] = useState('ammar.khurshid13@gmail.com');
@@ -54,6 +56,7 @@ function Footer({ images }) {
                         onClick={() => setShowModal(true)}
                         className='px-4 py-2 border border-transparent shadow-md text-md font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                     >
+                        <FontAwesomeIcon icon={faShare} className='mr-2' />
                         Share
                     </button>
                 </div>
