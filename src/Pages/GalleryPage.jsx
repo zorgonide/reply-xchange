@@ -12,7 +12,9 @@ function GalleryPage() {
     const [selectImagesButtonClicked, setSelectImages] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [previewImage, setPreviewImage] = useState(null);
-    const [dropdownOption, setDropdownOption] = React.useState('all');
+    const [dropdownOption, setDropdownOption] = useState('all');
+    const [accessToken, setAccessToken] = useState(null);
+
     const getImages = () => {
         axios
             .get('http://localhost:4502/bin/getAssetsAll', {
@@ -30,6 +32,13 @@ function GalleryPage() {
     };
     useEffect(() => {
         getImages();
+    }, []);
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        if (code) {
+            setAccessToken(code);
+        }
     }, []);
     const toggleImageSelection = (image) => {
         if (selectImagesButtonClicked) {
@@ -92,7 +101,7 @@ function GalleryPage() {
                 ))}
             </div>
             {selectedImages.id && <Footer images={selectedImages} />}
-            {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} />}
+            {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} OAuthCode={accessToken} />}
         </div>
     );
 }
