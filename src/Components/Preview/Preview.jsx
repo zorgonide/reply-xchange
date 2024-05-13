@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect } from 'react';
-import { useLinkedIn } from 'react-linkedin-login-oauth2';
-// You can use provided image shipped by this package or using your own
-import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
-function Preview({ image, onClose }) {
+import React, { useCallback, useEffect, useState } from 'react';
+function Preview({ image, onClose, OAuthCode }) {
+    const [accessToken, setAccessToken] = useState(null);
     const handleKeyUp = useCallback(
         (event) => {
             if (event.key === 'Escape') {
@@ -11,16 +9,6 @@ function Preview({ image, onClose }) {
         },
         [onClose]
     );
-    const { linkedInLogin } = useLinkedIn({
-        clientId: '78gcq4br7990pn',
-        redirectUri: `https://delightful-belekoy-f92b90.netlify.app/gallery`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
-        onSuccess: (code) => {
-            console.log(code);
-        },
-        onError: (error) => {
-            console.log(error);
-        },
-    });
 
     useEffect(() => {
         window.addEventListener('keyup', handleKeyUp);
@@ -28,8 +16,6 @@ function Preview({ image, onClose }) {
             window.removeEventListener('keyup', handleKeyUp);
         };
     }, [handleKeyUp]);
-
-    if (!image || !image.url) return null;
 
     const handleClickOutside = (event) => {
         if (event.target.id === 'image-preview-modal') {
@@ -59,7 +45,81 @@ function Preview({ image, onClose }) {
         pwa.document.write(ImageToPrint(source));
         pwa.document.close();
     }
+    const handleLinkedInAuth = () => {
+        if (!OAuthCode) {
+            const clientId = process.env.REACT_APP_LINKEDIN_CLIENT_ID;
+            const redirectUri = encodeURIComponent('http://localhost:3000/gallery');
+            const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=w_member_social`;
 
+            window.location.href = linkedInAuthUrl;
+        } else {
+            handleAccessToken(OAuthCode);
+        }
+    };
+
+    const handleAccessToken = (code) => {
+        const url = 'https://www.linkedin.com/oauth/v2/accessToken';
+        const params = new URLSearchParams();
+        params.append('grant_type', 'authorization_code');
+        params.append('code', code);
+        params.append('redirect_uri', 'http://localhost:3000/gallery');
+        params.append('client_id', process.env.REACT_APP_LINKEDIN_CLIENT_ID);
+        params.append('client_secret', process.env.REACT_APP_LINKEDIN_CLIENT_SECRET);
+
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', mode: 'no-cors' },
+            body: params.toString(),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.access_token) {
+                    setAccessToken(data.access_token);
+                }
+            })
+            .then(() => shareToLinkedIn())
+            .catch((error) => console.error('Error fetching access token:', error));
+    };
+
+    const shareToLinkedIn = () => {
+        if (!accessToken) {
+            alert('You are not authenticated with LinkedIn. Please authenticate to continue.');
+            return;
+        }
+
+        const apiURL = 'https://api.linkedin.com/v2/shares';
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        };
+        const payload = {
+            content: {
+                contentEntities: [
+                    {
+                        entityLocation: image.url,
+                        thumbnails: [
+                            {
+                                resolvedUrl: image.url,
+                            },
+                        ],
+                    },
+                ],
+                title: 'Shared Image',
+            },
+            distribution: {
+                linkedInDistributionTarget: {},
+            },
+            owner: 'urn:li:person:YOUR_PERSON_ID',
+            text: {
+                text: 'Check out this image!',
+            },
+        };
+
+        fetch(apiURL, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
+            .then((response) => response.json())
+            .then((data) => console.log('LinkedIn share response:', data))
+            .catch((error) => console.error('Error sharing to LinkedIn:', error));
+    };
     return (
         <div
             className='fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50'
@@ -101,13 +161,9 @@ function Preview({ image, onClose }) {
                             </svg>
                             Print
                         </button>
-                        <img
-                            onClick={linkedInLogin}
-                            src={linkedin}
-                            alt='Sign in with Linked In'
-                            style={{ maxWidth: '240px', cursor: 'pointer', minHeight: '40px' }}
-                            className='ml-4 '
-                        />
+                        <button className='bg-cred font-bold text-white p-2 rounded-md ml-2' onClick={handleLinkedInAuth}>
+                            Share to LinkedIn
+                        </button>
                     </div>
                 </div>
             </div>
