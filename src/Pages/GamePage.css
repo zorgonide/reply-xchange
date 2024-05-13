@@ -14,8 +14,17 @@
 .image-container-polaroid:nth-child(odd) {
     transform: rotate(2deg);
 }
+.image-container-polaroid:nth-child(odd):hover {
+    transform: rotate(0deg);
+}
 .image-container-polaroid:nth-child(even) {
     transform: rotate(0deg);
+}
+.image-container-polaroid:hover {
+    scale: 1.05;
+}
+.image-container-polaroid:nth-child(even):hover {
+    transform: rotate(2deg);
 }
 .image-cover {
     top: 20px;

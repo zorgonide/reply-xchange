@@ -4,7 +4,7 @@ function Image({ image, toggleImageSelection, selectedImages, index, incorrectSe
     return (
         <div
             key={image.id}
-            className={`image-container-polaroid mx-auto cursor-pointer ${
+            className={`image-container-polaroid mx-auto cursor-pointer ease-in duration-200 ${
                 incorrectSelection.some((e) => e.id === image.id) ? 'opacity-20 bg-cred' : 'bg-gray-200'
             }
             ${selectedImages.id === image.id ? 'border-4 border-cred' : 'border-2 border-gray-400'}

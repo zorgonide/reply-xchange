@@ -47,7 +47,7 @@ function GamePage() {
     return (
         <div className='container mx-auto p-4 game-image-container flex flex-col justify-center'>
             <div className='flex flex-wrap gap-9 grow mt-5 justify-center items-center'>
-                <div className='image-container-polaroid mx-auto  p-9'>
+                <div className='image-container-polaroid mx-auto ease-in duration-300 p-9'>
                     <div className='image-cover' style={{ background: 'white' }}>
                         <p className='text-4xl my-9'>
                             Can you tell what is <span className='font-bold text-cred'>Real</span>?
