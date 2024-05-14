@@ -8,7 +8,7 @@
     width: 300px;
     height: 340px;
     background: #fff;
-    box-shadow: 2px -2px 20px 0px rgba(0, 0, 0, 0.6), inset 4px 5px 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 2px -2px 10px 0px rgba(0, 0, 0, 0.6), inset 4px 5px 10px 0 rgba(0, 0, 0, 0.1);
     -webkit-backface-visibility: hidden;
 }
 .image-container-polaroid:nth-child(odd) {
