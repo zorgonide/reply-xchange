@@ -25,6 +25,7 @@ function GalleryPage() {
                 return response.data;
             })
             .then((data) => {
+                data.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setImages(data);
                 setOriginalImages(data);
             });
