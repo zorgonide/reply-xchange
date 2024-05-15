@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-//add print icon
+// add print and download icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faPrint, faDownload } from '@fortawesome/free-solid-svg-icons';
+
 function Preview({ image, onClose, OAuthCode }) {
     const [accessToken, setAccessToken] = useState(null);
+
     const handleKeyUp = useCallback(
         (event) => {
             if (event.key === 'Escape') {
@@ -25,6 +27,7 @@ function Preview({ image, onClose, OAuthCode }) {
             onClose();
         }
     };
+
     function ImageToPrint(source) {
         return (
             '<html><head><style>' +
@@ -48,6 +51,16 @@ function Preview({ image, onClose, OAuthCode }) {
         pwa.document.write(ImageToPrint(source));
         pwa.document.close();
     }
+
+    const handleDownload = (source) => {
+        const link = document.createElement('a');
+        link.href = source;
+        link.download = 'image.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const handleLinkedInAuth = () => {
         if (!OAuthCode) {
             const clientId = process.env.REACT_APP_LINKEDIN_CLIENT_ID;
@@ -123,6 +136,7 @@ function Preview({ image, onClose, OAuthCode }) {
             .then((data) => console.log('LinkedIn share response:', data))
             .catch((error) => console.error('Error sharing to LinkedIn:', error));
     };
+
     return (
         <div
             className='fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50'
@@ -145,12 +159,22 @@ function Preview({ image, onClose, OAuthCode }) {
                         </svg>
                     </button>
                     <div className='overflow-auto'>
-                        <img src={image.url} alt='Preview' className='mx-auto' style={{ maxHeight: '70vh' }} />
+                        <img src={image.url} alt='Preview' className='mx-auto mt-5 rounded-none' style={{ maxHeight: '70vh' }} />
                     </div>
                     <div className='print-section flex justify-end mt-4'>
-                        <button className='bg-cred font-bold text-white px-3 py-2 rounded-md flex items-center' onClick={() => PrintImage(image.url)}>
-                            <FontAwesomeIcon icon={faPrint} className='mr-2 animate-bounce' />
+                        <button
+                            className='bg-cred font-bold text-white px-3 py-2 rounded-md flex items-center mr-2'
+                            onClick={() => PrintImage(image.url)}
+                        >
+                            <FontAwesomeIcon icon={faPrint} className='mr-2' />
                             Print
+                        </button>
+                        <button
+                            className='bg-black font-bold text-white px-3 py-2 rounded-md flex items-center'
+                            onClick={() => handleDownload(image.url)}
+                        >
+                            <FontAwesomeIcon icon={faDownload} className='mr-2' />
+                            Download
                         </button>
                     </div>
                 </div>
