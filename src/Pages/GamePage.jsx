@@ -45,8 +45,8 @@ function GamePage() {
         }
     };
     return (
-        <div className='container mx-auto h-screen p-4'>
-            <div className='flex flex-wrap gap-9 grow mt-5 justify-center content-center h-full'>
+        <div className='container mx-auto min-h-screen p-4'>
+            <div className='flex flex-wrap gap-9 grow justify-center content-center min-h-screen'>
                 <div className='image-container-polaroid mx-auto ease-in duration-300 p-9'>
                     <div className='image-cover' style={{ background: 'white' }}>
                         <p className='text-4xl my-9'>
