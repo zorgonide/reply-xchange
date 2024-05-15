@@ -66,21 +66,6 @@ function GalleryPage() {
                         </select>
                     </button>
                 </div>
-                <div className='flex space-x-4'>
-                    <button
-                        onClick={() => {
-                            setSelectImages(!selectImagesButtonClicked);
-                            setSelectedImages([]);
-                        }}
-                        className={`font-bold py-2 px-4 rounded border border-black transition-colors duration-150 ${
-                            selectImagesButtonClicked ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'
-                        }`}
-                    >
-                        <FontAwesomeIcon icon={faCheck} className='mr-2' />
-                        Select Images
-                    </button>
-                    {/* <RefreshButton getImages={getImages} /> */}
-                </div>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
                 {images.map((image, index) => (
