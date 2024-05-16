@@ -3,6 +3,12 @@
 }
 @import 'https://fonts.googleapis.com/css?family=Rock+Salt';
 
+.title {
+    font-family: 'Rock Salt', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+}
 .image-container-polaroid {
     font-family: 'Rock Salt', sans-serif;
     width: 340px;

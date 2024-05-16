@@ -51,6 +51,7 @@ function GalleryPage() {
     };
     return (
         <div className='container mx-auto p-4'>
+            <div className='title text-3xl'>Wall of fame</div>
             <div className='flex justify-between items-center pb-4 pt-3'>
                 <div className='relative'>
                     <button className='text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center'>
