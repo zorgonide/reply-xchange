@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import holdingCard from '../../assets/Holding-Card.png';
+
 function NameTile({ username, routeChange, index }) {
-    const imageUrl = require(`../../assets/stickers/cat${(index + 1) % 60}.png`);
     const [image, setImage] = useState(null);
+    const [gamePlayed, setGamePlayed] = useState(false);
+
+    const imageUrl = require(`../../assets/stickers/cat${(index + 1) % 60}.png`);
+
     const getImages = () => {
         axios
             .get('http://localhost:4502/bin/getAssets?username=' + username, {
@@ -15,6 +20,7 @@ function NameTile({ username, routeChange, index }) {
                 setImage(data[Math.floor(Math.random() * data.length)]);
             });
     };
+
     const addToGamePlayed = (username) => {
         if (localStorage.getItem('gamesPlayed')) {
             let gamesPlayed = JSON.parse(localStorage.getItem('gamesPlayed'));
@@ -26,7 +32,9 @@ function NameTile({ username, routeChange, index }) {
         } else {
             localStorage.setItem('gamesPlayed', JSON.stringify([username]));
         }
+        setGamePlayed(true);
     };
+
     const checkForGamePlayed = (username) => {
         let gamesPlayed = localStorage.getItem('gamesPlayed');
         if (gamesPlayed) {
@@ -36,13 +44,16 @@ function NameTile({ username, routeChange, index }) {
             return false;
         }
     };
+
     useEffect(() => {
         getImages();
-    }, []);
+        setGamePlayed(checkForGamePlayed(username));
+    }, [username]);
+
     return (
         <div
             key={username}
-            className='cursor-pointer bg-white min-h-64 font-semibold border shadow-sm text-cred text-center hover:bg-gray-50 flex flex-col'
+            className='relative aspect-square cursor-pointer hover:bg-gray-50 border transition duration-300 ease-in-out'
             onClick={() => {
                 addToGamePlayed(username);
                 routeChange(username);
@@ -50,11 +61,19 @@ function NameTile({ username, routeChange, index }) {
         >
             <img
                 key={index}
-                src={image?.url}
+                src={image?.url || imageUrl}
                 alt={`Sticker ${(index + 1) % 60}`}
-                className={`object-cover rounded-none h-56 ${!checkForGamePlayed(username) ? 'opacity-50' : ''}`}
+                className={`object-cover rounded-none ${!gamePlayed ? 'opacity-50' : ''}`}
             />
-            <p className='my-2 text-xl order-last font-mono'>{username.replace(/[^a-zA-Z]/g, '')}</p>
+            {!gamePlayed && (
+                <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+                    {/* <span className='text-white text-2xl font-bold'>PLAY THE GAME</span> */}
+                    <img src={holdingCard} alt='holding card' className='opacity-40 rounded-none' />
+                </div>
+            )}
+            <div className='w-full justify-center bg-cblue py-1 bg-opacity-50 flex text-xl absolute bottom-0 font-mono'>
+                <div className='text-white opacity-none'>{username.replace(/[^a-zA-Z]/g, '')}</div>
+            </div>
         </div>
     );
 }
