@@ -4,7 +4,8 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                cred: '#f91351',
+                cred: '#0775a5',
+                cblue: '#263f4f',
             },
         },
     },
