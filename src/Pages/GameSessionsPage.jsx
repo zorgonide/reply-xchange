@@ -37,6 +37,8 @@ function GameSessionsPage() {
     return (
         <div className='min-h-screen bg-cblue'>
             <div className='container p-4 mx-auto'>
+                <h1 className='text-4xl my-4 text-white font-mono font-bold'>Game Sessions</h1>
+                <p className='text-white mb-4'>Select a user to start a game session</p>
                 <div className='flex gap-9'>
                     <div className='grow'>
                         <div className='grid grid-cols-6 gap-4'>
