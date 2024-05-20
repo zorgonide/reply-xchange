@@ -44,7 +44,7 @@ function GameSessionsPage() {
                                 <img src={Cat} alt='magic cat' className='object-contain rounded-none h-56 my-auto' />
                             </div>
                             <div className='bg-white  border shadow-sm flex flex-col items-center p-4'>
-                                <p className='text-4xl font-mono'>
+                                <p className='text-4xl title'>
                                     Please wait while <span className='font-bold text-cred'>Comwrap Cat</span> does its magic✨
                                 </p>
                             </div>
