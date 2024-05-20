@@ -30,7 +30,7 @@ function Header() {
                     </li>
                 </ul>
                 <div className='absolute right-0 top-2'>
-                    <img src={Xchange} alt='xchange' className='h-32 w-auto' />
+                    <img src={Xchange} alt='xchange' className='h-28 w-auto' />
                 </div>
             </nav>
         </header>
