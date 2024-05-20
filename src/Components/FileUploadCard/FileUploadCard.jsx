@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Cat from '../../assets/cat.gif';
-import Artist from '../../assets/drawing.svg';
+import Artist from '../../assets/draw1.svg';
 import { useNavigate } from 'react-router-dom';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 function FileUploadCard() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState('');
@@ -51,7 +54,7 @@ function FileUploadCard() {
                         setUploadSuccess('Upload successful!');
                         setSelectedFile(null);
                         setName('');
-                        navigate('game');
+                        // navigate('game');
                     });
             })
             .catch((error) => {
@@ -61,9 +64,11 @@ function FileUploadCard() {
     };
 
     return (
-        <div className='flex flex-col justify-center items-center h-screen bg-gray-50'>
+        <div className='flex flex-col justify-center items-center h-screen bg-cblue'>
             <div className='bg-white p-6 w-full max-w-lg shadow-xl rounded-none'>
-                <p className='text-center font-semibold text-2xl font-mono text-cred mb-3'>Comwrap Clash: Artist or Algorithm</p>
+                <p className='text-center font-semibold text-3xl title-font mb-3'>
+                    Artist <span className='text-cred'>or</span> Algorithm
+                </p>
                 <p className='text-center text-md font-light text-gray-700 italic mb-3'>Can you tell what is real?</p>
                 <form onSubmit={handleSubmit} className='space-y-4'>
                     <div className='flex items-center justify-center w-ful'>
@@ -74,36 +79,13 @@ function FileUploadCard() {
                             }`}
                         >
                             <div className='flex flex-col items-center justify-center pt-5 pb-6'>
-                                {!selectedFile && (
-                                    <>
-                                        <div className='px-4'>
-                                            <img src={Artist} alt='Preview' className='my-4 rounded-lg max-w-full h-auto' />
-                                        </div>
-                                        {/* <svg
-                                            className='w-8 h-8 mb-4 text-gray-600'
-                                            aria-hidden='true'
-                                            fill='none'
-                                            viewBox='0 0 24 24'
-                                            stroke='currentColor'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                strokeWidth={2}
-                                                d='M7 7l5-5m0 0l5 5m-5-5v18M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10M9 21h6'
-                                            />
-                                        </svg> */}
-                                        <p className='mb-2 text-sm text-gray-700'>
-                                            <span className='font-semibold'>Click to upload</span> or drag and drop
-                                        </p>
-                                        <p className='text-xs text-gray-500'>Only PNG files</p>
-                                    </>
-                                )}
-                                {selectedFile && (
-                                    <div className='px-4'>
-                                        <img src={Cat} alt='Preview' className='mt-4 rounded-lg max-w-full h-auto' />
-                                    </div>
-                                )}
+                                <div className='px-4'>
+                                    <img src={Artist} alt='Preview' className='my-4 rounded-lg max-w-full h-auto' />
+                                </div>
+                                <p className='mb-2 text-sm text-gray-700'>
+                                    <span className='font-semibold'>Click to upload</span> or drag and drop
+                                </p>
+                                <p className='text-xs text-gray-500'>Only PNG files</p>
                             </div>
                             <input id='dropzone-file' type='file' className='hidden' onChange={handleFileChange} accept='image/png' />
                         </label>
@@ -123,6 +105,7 @@ function FileUploadCard() {
                         }`}
                         disabled={!selectedFile || !name}
                     >
+                        <FontAwesomeIcon icon={faUpload} className='mr-2' />
                         Upload photo
                     </button>
                     {uploadSuccess && <p className='text-center text-green-500'>{uploadSuccess}</p>}
