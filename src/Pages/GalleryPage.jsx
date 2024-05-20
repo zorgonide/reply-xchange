@@ -50,38 +50,40 @@ function GalleryPage() {
         }
     };
     return (
-        <div className='container mx-auto p-4'>
-            <div className='title text-3xl'>Wall of fame</div>
-            <div className='flex justify-between items-center pb-4 pt-3'>
-                <div className='relative'>
-                    <button className='text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center'>
-                        <span className='mr-1'>Filter</span>
-                        <select
-                            value={dropdownOption}
-                            onChange={(e) => changeFilter(e.target.value)}
-                            className='border border-gray-300 rounded p-2 shadow-sm focus:outline-none focus:ring-2'
-                        >
-                            <option value='all'>All</option>
-                            <option value='1'>AI</option>
-                            <option value='0'>Human</option>
-                        </select>
-                    </button>
+        <div className='min-h-screen bg-cblue'>
+            <div className='container mx-auto p-4'>
+                <div className='title text-3xl text-white '>Wall of fame</div>
+                <div className='flex justify-between items-center pb-4 pt-3'>
+                    <div className='relative'>
+                        <button className='font-semibold py-2 px-4 rounded inline-flex items-center'>
+                            <span className='mr-1 text-white '>Filter</span>
+                            <select
+                                value={dropdownOption}
+                                onChange={(e) => changeFilter(e.target.value)}
+                                className='border border-gray-300 rounded p-2 shadow-sm focus:outline-none focus:ring-2'
+                            >
+                                <option value='all'>All</option>
+                                <option value='1'>AI</option>
+                                <option value='0'>Human</option>
+                            </select>
+                        </button>
+                    </div>
                 </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+                    {images.map((image, index) => (
+                        <Image
+                            key={image.id}
+                            image={image}
+                            toggleImageSelection={toggleImageSelection}
+                            selectedImages={selectedImages}
+                            name={'Photo'}
+                            index={index}
+                        />
+                    ))}
+                </div>
+                {selectedImages.id && <Footer images={selectedImages} />}
+                {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} />}
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-                {images.map((image, index) => (
-                    <Image
-                        key={image.id}
-                        image={image}
-                        toggleImageSelection={toggleImageSelection}
-                        selectedImages={selectedImages}
-                        name={'Photo'}
-                        index={index}
-                    />
-                ))}
-            </div>
-            {selectedImages.id && <Footer images={selectedImages} />}
-            {showModal && <Preview image={previewImage} onClose={() => setShowModal(false)} />}
         </div>
     );
 }
