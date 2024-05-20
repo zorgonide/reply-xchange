@@ -45,41 +45,43 @@ function GamePage() {
         }
     };
     return (
-        <div className='container mx-auto min-h-screen p-4'>
-            <div className='flex flex-wrap gap-9 grow justify-center content-center min-h-screen'>
-                <div className='image-container-polaroid mx-auto ease-in duration-300 p-9'>
-                    <div className='image-cover' style={{ background: 'white' }}>
-                        <p className='text-4xl my-9'>
-                            Can you tell what is <span className='font-bold text-cred'>Real</span>?
-                        </p>
-                    </div>
+        <div className='min-h-screen bg-cblue'>
+            <div className='container mx-auto min-h-full'>
+                <div className='grid grid-cols-3 gap-4 place-content-center py-10'>
+                    {/* <div className='image-container-polaroid mx-auto ease-in duration-300 p-9'>
+                        <div className='image-cover' style={{ background: 'white' }}>
+                            <p className='text-4xl my-9'>
+                                Can you tell what is <span className='font-bold text-cred'>Real</span>?
+                            </p>
+                        </div>
+                    </div> */}
+                    {images.map((image, i) => (
+                        <Image
+                            key={image.id}
+                            image={image}
+                            toggleImageSelection={toggleImageSelection}
+                            selectedImages={selectedImage}
+                            incorrectSelection={incorrectSelection}
+                            index={i}
+                            name={id.replace(/[^a-zA-Z]/g, '')}
+                            didWin={status}
+                        />
+                    ))}
                 </div>
-                {images.map((image, i) => (
-                    <Image
-                        key={image.id}
-                        image={image}
-                        toggleImageSelection={toggleImageSelection}
-                        selectedImages={selectedImage}
-                        incorrectSelection={incorrectSelection}
-                        index={i}
-                        name={id.replace(/[^a-zA-Z]/g, '')}
-                        didWin={status}
-                    />
-                ))}
+                {selectedImage.id && (
+                    <div className='bg-gray-200 text-white fixed p-2 bottom-0 left-0 right-0 z-50'>
+                        <div className='flex justify-end'>
+                            <button
+                                onClick={() => checkSelection()}
+                                className='px-4 py-2 border border-transparent shadow-md text-md font-medium rounded-md text-white bg-cred hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 '
+                            >
+                                Select
+                            </button>
+                        </div>
+                    </div>
+                )}
+                <Confetti width={width} height={height} recycle={false} initialVelocityY={5} run={status} numberOfPieces={400} />
             </div>
-            {selectedImage.id && (
-                <div className='bg-gray-200 text-white fixed p-2 bottom-0 left-0 right-0 z-50'>
-                    <div className='flex justify-end'>
-                        <button
-                            onClick={() => checkSelection()}
-                            className='px-4 py-2 border border-transparent shadow-md text-md font-medium rounded-md text-white bg-cred hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 '
-                        >
-                            Select
-                        </button>
-                    </div>
-                </div>
-            )}
-            <Confetti width={width} height={height} recycle={false} initialVelocityY={5} run={status} numberOfPieces={400} />
         </div>
     );
 }
