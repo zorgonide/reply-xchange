@@ -144,7 +144,7 @@ function Preview({ image, onClose, OAuthCode }) {
             onClick={handleClickOutside}
         >
             <div className='flex justify-center items-center h-full'>
-                <div className='relative mx-auto p-5 max-w-4xl max-h-full bg-white rounded-none shadow-lg'>
+                <div className='relative mx-auto px-10 pt-8 pb-5 max-w-4xl max-h-full bg-white rounded-none shadow-lg'>
                     <button onClick={onClose} className='absolute top-0 right-0 mt-4 mr-4 text-gray-700 hover:text-gray-900' aria-label='Close'>
                         <svg
                             className='w-6 h-6'
@@ -158,7 +158,7 @@ function Preview({ image, onClose, OAuthCode }) {
                             <path d='M6 18L18 6M6 6l12 12'></path>
                         </svg>
                     </button>
-                    <div className='overflow-auto'>
+                    <div className='shadow-2xl'>
                         <img src={image.url} alt='Preview' className='mx-auto mt-5 rounded-none' style={{ maxHeight: '70vh' }} />
                     </div>
                     <div className='print-section flex justify-end mt-4'>
