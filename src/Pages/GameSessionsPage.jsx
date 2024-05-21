@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Cat from '../assets/cat-magic.gif';
+import GIF from '../assets/loading.gif';
 import { useNavigate } from 'react-router-dom';
 import NameTile from '../Components/NameTile/NameTile';
 function GameSessionsPage() {
@@ -42,8 +42,8 @@ function GameSessionsPage() {
                 <div className='flex gap-9'>
                     <div className='grow'>
                         <div className='grid grid-cols-6 gap-4'>
-                            <div className='bg-cred p-7'>
-                                <img src={Cat} alt='cat' />
+                            <div className='bg-cred'>
+                                <img src={GIF} alt='cat' className='rounded-none' />
                             </div>
                             {usernames.map((username, i) => (
                                 <NameTile key={username} username={username} routeChange={routeChange} index={i} />

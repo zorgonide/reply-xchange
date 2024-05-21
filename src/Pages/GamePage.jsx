@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Image from '../Components/Image/Image';
 import { useParams } from 'react-router-dom';
-import useWindowSize from 'react-use/lib/useWindowSize';
 import Confetti from 'react-confetti';
 import './GamePage.css';
 import GameTile from '../Components/GameTile/GameTile';
