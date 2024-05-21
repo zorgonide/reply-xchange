@@ -8,7 +8,7 @@ function GameTile({ image, toggleImageSelection, selectedImages, index, incorrec
                 incorrectSelection.some((e) => e.id === image.id) ? 'opacity-20 bg-cred' : 'bg-gray-200'
             }
     ${selectedImages.id === image.id ? 'border-4 border-cred' : 'border-2 border-gray-400'}
-    ${didWin & (selectedImages.id === image.id) ? 'border-lime-500' : ''}`}
+    ${didWin & (selectedImages.id === image.id) ? 'border-cgreen' : ''}`}
             onClick={() => toggleImageSelection(image)}
         >
             <img src={image.url} alt={image.title} className='rounded-none' />

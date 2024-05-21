@@ -51,7 +51,7 @@ function NameTile({ username, routeChange, index }) {
     return (
         <div
             key={username}
-            className='relative aspect-square cursor-pointer hover:bg-gray-50 border transition duration-300 ease-in-out'
+            className='relative aspect-square cursor-pointer border hover:border-cgreen hover:border-4 transition ease-in-out duration-300'
             onClick={() => {
                 addToGamePlayed(username);
                 routeChange(username);

@@ -8,7 +8,7 @@ function Image({ image, toggleImageSelection, selectedImages, index, incorrectSe
                 incorrectSelection.some((e) => e.id === image.id) ? 'opacity-20 bg-cred' : 'bg-gray-200'
             }
             ${selectedImages.id === image.id ? 'border-4 border-cred' : 'border-2 border-gray-400'}
-            ${didWin & (selectedImages.id === image.id) ? 'border-lime-500' : ''}`}
+            ${didWin & (selectedImages.id === image.id) ? 'border-cgreen' : ''}`}
             onClick={() => toggleImageSelection(image)}
         >
             <div className='image-cover'>
