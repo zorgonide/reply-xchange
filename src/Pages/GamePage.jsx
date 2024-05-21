@@ -5,13 +5,21 @@ import { useParams } from 'react-router-dom';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Confetti from 'react-confetti';
 import './GamePage.css';
+import GameTile from '../Components/GameTile/GameTile';
 function GamePage() {
     const [images, setImages] = useState([]);
     const [status, setStatus] = useState(false);
     const [selectedImage, setSelectedImage] = useState([]);
     const [incorrectSelection, setIncorrectSelection] = useState([]);
     const { id } = useParams();
-    const { width, height } = useWindowSize();
+    function getWindowDimensions() {
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    }
+    const { width, height } = getWindowDimensions();
     function randomSort(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -46,17 +54,11 @@ function GamePage() {
     };
     return (
         <div className='min-h-screen bg-cblue'>
-            <div className='container mx-auto min-h-full'>
-                <div className='grid grid-cols-3 gap-4 place-content-center py-10'>
-                    {/* <div className='image-container-polaroid mx-auto ease-in duration-300 p-9'>
-                        <div className='image-cover' style={{ background: 'white' }}>
-                            <p className='text-4xl my-9'>
-                                Can you tell what is <span className='font-bold text-cred'>Real</span>?
-                            </p>
-                        </div>
-                    </div> */}
+            <div className='container mx-auto'>
+                <h1 className='text-3xl text-white pt-7 font-mono font-bold'>Who do you think is real?</h1>
+                <div className='grid grid-cols-3 gap-8 place-content-center py-10'>
                     {images.map((image, i) => (
-                        <Image
+                        <GameTile
                             key={image.id}
                             image={image}
                             toggleImageSelection={toggleImageSelection}
@@ -80,7 +82,7 @@ function GamePage() {
                         </div>
                     </div>
                 )}
-                <Confetti width={width} height={height} recycle={false} initialVelocityY={5} run={status} numberOfPieces={400} />
+                <Confetti width={width - 50} height={height} recycle={false} initialVelocityY={5} run={status} numberOfPieces={400} />
             </div>
         </div>
     );
