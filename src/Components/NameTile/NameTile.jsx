@@ -6,8 +6,6 @@ function NameTile({ username, routeChange, index }) {
     const [image, setImage] = useState(null);
     const [gamePlayed, setGamePlayed] = useState(false);
 
-    const imageUrl = require(`../../assets/stickers/cat${(index + 1) % 60}.png`);
-
     const getImages = () => {
         axios
             .get('http://localhost:4502/bin/getAssets?username=' + username, {
@@ -61,7 +59,7 @@ function NameTile({ username, routeChange, index }) {
         >
             <img
                 key={index}
-                src={image?.url || imageUrl}
+                src={image?.url}
                 alt={`Sticker ${(index + 1) % 60}`}
                 className={`object-cover rounded-none ${!gamePlayed ? 'opacity-50' : ''}`}
             />
